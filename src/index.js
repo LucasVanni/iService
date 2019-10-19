@@ -11,6 +11,7 @@ import Preload from './screens/Preload';
 import Login from './screens/Login';
 import ForgotPassword from './screens/ForgotPassword';
 import SignUp from './screens/SignUp';
+import HomeDrawer from './screens/HomeDrawer';
 
 // Criando as rotas iniciais de navegação
 
@@ -19,6 +20,12 @@ const AppNavigator = createStackNavigator({
   Login,
   ForgotPassword,
   SignUp,
+  HomeDrawer: {
+    screen: HomeDrawer,
+    navigationOptions: {
+      header: null,
+    },
+  },
 });
 
 // Criando o AppContainer

@@ -10,6 +10,8 @@ import {
 
 import {connect} from 'react-redux';
 
+import {StackActions, NavigationActions} from 'react-navigation';
+
 import {
   setEmailField,
   setEmailBorderColorLogin,
@@ -43,6 +45,18 @@ export class Login extends Component {
     };
   }
 
+  UNSAFE_componentWillUpdate() {
+    if (this.props.status == 1) {
+      //Manda o user para a tela home
+      this.props.navigation.dispatch(
+        StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({routeName: 'HomeDrawer'})],
+        }),
+      );
+    }
+  }
+
   render() {
     function loginAction(objeto) {
       if (objeto.props.emailValid == true && objeto.props.passValid == true) {
@@ -70,6 +84,7 @@ export class Login extends Component {
         speed={1600}>
         <StatusBar backgroundColor="#1f33c9" barStyle="light-content" />
         <View style={styles.container}>
+          {console.log(this.props.status)}
           <KeyboardAvoidingView
             behavior="padding"
             enabled

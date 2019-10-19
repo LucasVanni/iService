@@ -34,6 +34,12 @@ class Preload extends Component {
     switch (this.props.status) {
       case 1:
         //Manda o user para a tela home
+        this.props.navigation.dispatch(
+          StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({routeName: 'HomeDrawer'})],
+          }),
+        );
         break;
       case 2:
         //Manda o usuário para o Login

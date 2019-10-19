@@ -1,8 +1,10 @@
 import {
+  verifyLogin,
   makeLogin,
   makeSendEmail,
   makeProviderSignUp,
   makeUserSignUp,
+  makeSignOut,
 } from '../APIS/iServiceAPI';
 import firebase from '../APIS/FireApi';
 
@@ -14,12 +16,24 @@ const nomeCompleto4 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
 const re = /[a-z0-9!#$%&'*+\/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9][a-z0-9-]*[a-z0-9]/;
 
 export const checkLogin = () => {
-  // Incompleto
-  return {
-    type: 'changeStatus',
-    payload: {
-      status: 2,
-    },
+  return dispatch => {
+    verifyLogin()
+      .then(resolveProps => {
+        dispatch({
+          type: 'changeStatus',
+          payload: {
+            status: resolveProps,
+          },
+        });
+      })
+      .catch(rejectProps => {
+        dispatch({
+          type: 'changeStatus',
+          payload: {
+            status: rejectProps,
+          },
+        });
+      });
   };
 };
 
@@ -601,6 +615,28 @@ export const userSignUp = (objeto, callback) => {
           });
         });
     }
+  };
+};
+
+export const SignOut = () => {
+  return dispatch => {
+    makeSignOut()
+      .then(status => {
+        dispatch({
+          type: 'changeStatus',
+          payload: {
+            status,
+          },
+        });
+      })
+      .catch(status => {
+        dispatch({
+          type: 'changeStatus',
+          payload: {
+            status,
+          },
+        });
+      });
   };
 };
 
