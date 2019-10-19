@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, TouchableHighlight} from 'react-native';
 import {Icon} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 
 import {getUrlProfileImage, setUrlProfileImage} from '../../actions/HomeAction';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 
 export class CustomSidebarMenu extends Component {
   constructor() {
     super();
+
     //Setting up the Main Top Large Image of the Custom Sidebar
 
     //Array of the sidebar navigation option with icon and screen to navigate
@@ -22,12 +22,27 @@ export class CustomSidebarMenu extends Component {
         screenToNavigate: 'Home',
       },
       {
+        navOptionThumb: 'chat',
+        navOptionName: 'Conversas',
+        screenToNavigate: 'Conversas',
+      },
+      {
         navOptionThumb: 'exit-to-app',
         navOptionName: 'Sair',
         screenToNavigate: 'Sair',
       },
     ];
+
+    this.changeColor = this.changeColor.bind(this);
   }
+
+  changeColor = key => {
+    if (global.currentScreenIndex == key) {
+      return '#1f33c9';
+    } else {
+      return 'black';
+    }
+  };
 
   UNSAFE_componentWillMount() {
     this.props.getUrlProfileImage();
@@ -58,28 +73,37 @@ export class CustomSidebarMenu extends Component {
           {this.items.map((item, key) => (
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
                 paddingTop: 10,
                 paddingBottom: 10,
                 backgroundColor:
                   global.currentScreenIndex === key ? '#e0dbdb' : '#ffffff',
               }}
               key={key}>
-              <View style={{marginRight: 10, marginLeft: 20}}>
-                <Icon name={item.navOptionThumb} size={25} color="#808080" />
-              </View>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: global.currentScreenIndex === key ? 'red' : 'black',
-                }}
+              <TouchableHighlight
+                underlayColor={null}
+                style={{flexDirection: 'row', alignItems: 'center'}}
                 onPress={() => {
                   global.currentScreenIndex = key;
                   this.props.navigation.navigate(item.screenToNavigate);
                 }}>
-                {item.navOptionName}
-              </Text>
+                <>
+                  <View style={{marginRight: 10, marginLeft: 20}}>
+                    <Icon
+                      name={item.navOptionThumb}
+                      size={25}
+                      color={this.changeColor(key)}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color:
+                        global.currentScreenIndex === key ? '#1f33c9' : 'black',
+                    }}>
+                    {item.navOptionName}
+                  </Text>
+                </>
+              </TouchableHighlight>
             </View>
           ))}
         </View>

@@ -15,6 +15,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import Home from './Home';
+import Conversas from './Conversas';
 import Sair from '../components/Sair/';
 
 import CustomSidebarMenu from '../components/CustomSidebarMenu/';
@@ -64,13 +65,28 @@ const FirstStack = createStackNavigator({
 
 const SecondStack = createStackNavigator({
   Second: {
+    screen: Conversas,
+    navigationOptions: ({navigation}) => ({
+      title: 'Conversas',
+      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+
+      headerStyle: {
+        backgroundColor: '#1f33c9',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
+const ThirdStack = createStackNavigator({
+  Third: {
     screen: Sair,
     navigationOptions: ({navigation}) => ({
       title: 'Sair',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
 
       headerStyle: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#1f33c9',
       },
       headerTintColor: '#fff',
     }),
@@ -85,8 +101,14 @@ const HomeDrawer = createDrawerNavigator(
         drawerLabel: 'HOME',
       },
     },
-    Sair: {
+    Conversas: {
       screen: SecondStack,
+      navigationOptions: {
+        drawerLabel: 'Conversas',
+      },
+    },
+    Sair: {
+      screen: ThirdStack,
       navigationOptions: {
         drawerLabel: 'Sair',
       },
