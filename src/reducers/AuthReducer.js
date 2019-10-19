@@ -3,6 +3,9 @@ const initialState = {
 
   errorGeral: null,
 
+  emailBorderColorForgot: '#fff',
+  errorForgotPass: null,
+
   emailBorderColorLogin: '#fff',
   passBorderColorLogin: '#fff',
   errorGeralLogin: null,
@@ -58,6 +61,10 @@ const AuthReducer = (state = initialState, action) => {
     state.errorGeralLogin = null;
     state.emailBorderColorLogin = '#fff';
     state.passBorderColorLogin = '#fff';
+
+    //Aplicado somente na tela Recuperar Senha
+    state.emailBorderColorForgot = '#fff';
+    state.errorForgotPass = null;
 
     return {...state, email: action.payload.email};
   }
@@ -238,6 +245,20 @@ const AuthReducer = (state = initialState, action) => {
     return {
       ...state,
       errorGeral: action.payload.errorGeral,
+    };
+  }
+
+  if (action.type === 'setErrorForgotPass') {
+    return {
+      ...state,
+      errorForgotPass: action.payload.errorForgotPass,
+    };
+  }
+
+  if (action.type === 'setEmailBorderColorForgot') {
+    return {
+      ...state,
+      emailBorderColorForgot: action.payload.emailBorderColorForgot,
     };
   }
 

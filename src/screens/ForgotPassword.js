@@ -10,13 +10,16 @@ import {
 
 import {connect} from 'react-redux';
 
-import {setEmailField, doSendEmail} from '../actions/AuthActions';
+import {
+  setEmailField,
+  doSendEmail,
+  setErrorForgotPass,
+  setEmailBorderColorForgot,
+} from '../actions/AuthActions';
 
 import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
 
 import CamposLogin from '../components/CamposLogin/';
-
-import Logo from '../components/Logo/';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
@@ -29,12 +32,16 @@ export class ForgotPassword extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+    };
   }
 
   render() {
     function sendEmailAction(objeto) {
       if (objeto.props.emailValid == true) {
-        objeto.props.doSendEmail(objeto.props.email, objeto);
+        objeto.props.doSendEmail(objeto);
       }
 
       return null;
@@ -63,13 +70,19 @@ export class ForgotPassword extends Component {
 
             <CamposLogin
               nomeCampo={'E-MAIL'}
-              borderBottomColor={this.props.emailBorderColor}
+              borderBottomColor={this.props.emailBorderColorForgot}
               color={'#fff'}
               secureTextEntry={false}
               value={this.props.email}
               validState={this.props.emailValid}
               actions={this.props.setEmailField}
             />
+
+            {this.props.errorForgotPass == null ? null : (
+              <View style={styles.viewError}>
+                <Text style={styles.error}>{this.props.errorForgotPass}</Text>
+              </View>
+            )}
 
             <TouchableHighlight
               style={[{opacity: SignInButtonOpacity}, styles.signInButton]}
@@ -136,13 +149,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  viewError: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 0,
+    marginBottom: 10,
+  },
+  error: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
 });
 
 const mapStateToProps = state => {
   return {
     status: state.auth.status,
+
+    errorForgotPass: state.auth.errorForgotPass,
+
     email: state.auth.email,
-    emailBorderColor: state.auth.emailBorderColor,
+    emailBorderColorForgot: state.auth.emailBorderColorForgot,
     emailValid: state.auth.emailValid,
   };
 };
@@ -152,6 +179,8 @@ const ForgotPasswordConnect = connect(
   {
     doSendEmail,
     setEmailField,
+    setErrorForgotPass,
+    setEmailBorderColorForgot,
   },
 )(ForgotPassword);
 

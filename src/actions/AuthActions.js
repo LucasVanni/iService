@@ -68,10 +68,10 @@ export const setNameField = name => {
   };
 };
 
-export const doSendEmail = (email, objeto) => {
+export const doSendEmail = objeto => {
   objeto.setState({loading: true});
   return dispatch => {
-    makeSendEmail(email, () => {
+    makeSendEmail(objeto.props.email, () => {
       objeto.setState({loading: false});
     })
       .then(resolveProps => {
@@ -83,22 +83,13 @@ export const doSendEmail = (email, objeto) => {
         });
       })
       .catch(rejectProps => {
-        let errorMessageMaster = '';
         switch (rejectProps.error.code) {
-          case 'auth/email-already-in-use':
-            errorMessageMaster = 'E-mail já utilizado';
-            break;
-          case 'auth/invalid-email':
-            errorMessageMaster = 'E-mail inválido';
-            break;
-          case 'auth/operation-not-allowed':
-            errorMessageMaster = 'Tente novamente mais tarde';
-            break;
-          case 'auth/weak-password':
-            errorMessageMaster = 'A senha deve ter mais que 6 digitos';
+          case 'auth/user-not-found':
+            objeto.props.setErrorForgotPass('Usuário não encontrado');
+            objeto.props.setEmailBorderColorForgot('#f00');
             break;
           default:
-            errorMessageMaster = rejectProps.error.message;
+            alert(rejectProps.error.code);
             break;
         }
 
@@ -106,10 +97,6 @@ export const doSendEmail = (email, objeto) => {
           type: 'changeStatus',
           payload: {
             status: rejectProps.status,
-          },
-          type: 'setErrorMessageMaster',
-          payload: {
-            errorMessageMaster,
           },
         });
       });
@@ -141,6 +128,24 @@ export const getListaProfissoes = () => {
           },
         });
       });
+  };
+};
+
+export const setErrorForgotPass = errorForgotPass => {
+  return {
+    type: 'setErrorForgotPass',
+    payload: {
+      errorForgotPass,
+    },
+  };
+};
+
+export const setEmailBorderColorForgot = emailBorderColorForgot => {
+  return {
+    type: 'setEmailBorderColorForgot',
+    payload: {
+      emailBorderColorForgot,
+    },
   };
 };
 
