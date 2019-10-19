@@ -140,7 +140,7 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, errorPicker: action.payload.errorPicker};
   }
 
-  if (action.type == 'setPickerBorderColorErro') {
+  if (action.type == 'setPickerBorderColor') {
     return {
       ...state,
       pickerBorderColor: action.payload.pickerBorderColor,
@@ -160,6 +160,14 @@ const AuthReducer = (state = initialState, action) => {
 
   if (action.type === 'setErrorName') {
     return {...state, errorName: action.payload.errorName};
+  }
+
+  if (action.type === 'setEmailBorderColor') {
+    return {...state, emailBorderColor: action.payload.emailBorderColor};
+  }
+
+  if (action.type === 'setErrorEmail') {
+    return {...state, errorEmail: action.payload.errorEmail};
   }
 
   if (action.type === 'setPassBorderColor') {

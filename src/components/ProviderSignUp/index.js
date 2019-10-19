@@ -26,14 +26,16 @@ import {
   setErrorName,
   setNameBorderColor,
   setEmailField,
-  setErrorPass,
+  setErrorEmail,
+  setEmailBorderColor,
   setPasswordField,
+  setErrorPass,
   setPassBorderColor,
   setPasswordConfirmField,
   setErrorPassConfirm,
   setPassConfirmBorderColor,
   getListaProfissoes,
-  setPickerBorderColorErro,
+  setPickerBorderColor,
   setErrorPicker,
   editProfessionChoose,
   providerSignUp,
@@ -235,10 +237,10 @@ export class ProviderSignUp extends Component {
 
 const validateOnSelected = (listaProfissoes, objeto) => {
   if (listaProfissoes.key == '0' || listaProfissoes.key == undefined) {
-    objeto.props.setPickerBorderColorErro('#f00');
+    objeto.props.setPickerBorderColor('#f00');
     objeto.props.setErrorPicker('Selecione uma profissão');
   } else {
-    objeto.props.setPickerBorderColorErro('#fff');
+    objeto.props.setPickerBorderColor('#fff');
     objeto.props.setErrorPicker(null);
   }
 
@@ -402,8 +404,10 @@ const ProviderSignUpConnect = connect(
     setErrorPassConfirm,
     setPassConfirmBorderColor,
     setEmailField,
+    setErrorEmail,
+    setEmailBorderColor,
     getListaProfissoes,
-    setPickerBorderColorErro,
+    setPickerBorderColor,
     setErrorPicker,
     editProfessionChoose,
     providerSignUp,

@@ -141,9 +141,9 @@ export const setErrorPicker = errorPicker => {
   };
 };
 
-export const setPickerBorderColorErro = pickerBorderColor => {
+export const setPickerBorderColor = pickerBorderColor => {
   return {
-    type: 'setPickerBorderColorErro',
+    type: 'setPickerBorderColor',
     payload: {
       pickerBorderColor,
     },
@@ -283,6 +283,24 @@ export const setCorErrorAvatar = avatarBorderColor => {
   };
 };
 
+export const setErrorEmail = errorEmail => {
+  return {
+    type: 'setErrorEmail',
+    payload: {
+      errorEmail,
+    },
+  };
+};
+
+export const setEmailBorderColor = emailBorderColor => {
+  return {
+    type: 'setEmailBorderColor',
+    payload: {
+      emailBorderColor,
+    },
+  };
+};
+
 export const providerSignUp = (objeto, callback) => {
   return dispatch => {
     let cadastro = true;
@@ -308,35 +326,35 @@ export const providerSignUp = (objeto, callback) => {
       cadastro = false;
     }
 
-    // if (objeto.props.email == '') {
-    //   objeto.props.setCorErroEmail('#f00', 4);
-    //   objeto.props.setErroEmail('Campo e-mail obrigatório');
-    //   cadastro = false;
-    // }
+    if (objeto.props.email == '') {
+      objeto.props.setEmailBorderColor('#f00');
+      objeto.props.setErrorEmail('Campo e-mail obrigatório');
+      cadastro = false;
+    }
 
-    // if (objeto.props.senha == '') {
-    //   objeto.props.setCorErroSenha('#f00', 4);
-    //   objeto.props.setErroSenha('Campo senha obrigatório');
-    //   cadastro = false;
-    // }
+    if (objeto.props.pass == '') {
+      objeto.props.setPassBorderColor('#f00');
+      objeto.props.setErrorPass('Campo senha obrigatório');
+      cadastro = false;
+    }
 
-    // if (objeto.props.confirmarSenha == '') {
-    //   objeto.props.setCorErroConfirmarSenha('#f00', 4);
-    //   objeto.props.setErroConfirmarSenha('Campo confirmar senha obrigatório');
-    //   cadastro = false;
-    // }
+    if (objeto.props.passConfirm == '') {
+      objeto.props.setPassConfirmBorderColor('#f00', 4);
+      objeto.props.setErrorPassConfirm('Campo confirmar senha obrigatório');
+      cadastro = false;
+    }
 
-    // if (
-    //   objeto.props.profissaoEscolhida.key == 0 ||
-    //   objeto.props.profissaoEscolhida.key == undefined
-    // ) {
-    //   objeto.props.setCorErroPicker('#f00', 4);
-    //   objeto.props.setErroPicker('Selecione uma profissão');
-    //   cadastro = false;
-    // } else {
-    //   objeto.props.setCorErroPicker('#fff', 2);
-    //   objeto.props.setErroPicker(null);
-    // }
+    if (
+      objeto.props.professionChoose.key == 0 ||
+      objeto.props.professionChoose.key == undefined
+    ) {
+      objeto.props.setPickerBorderColor('#f00');
+      objeto.props.setErrorPicker('Selecione uma profissão');
+      cadastro = false;
+    } else {
+      objeto.props.setPickerBorderColor('#fff');
+      objeto.props.setErrorPicker(null);
+    }
 
     // nomeCompleto = /^[a-zA-Z]+ +[a-zA-Z]+$/;
     // nomeCompleto2 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
@@ -437,15 +455,15 @@ export const providerSignUp = (objeto, callback) => {
     //       switch (error.code) {
     //         case 'auth/email-already-in-use':
     //           objeto.props.setCorErroEmail('#f00', 4);
-    //           objeto.props.setErroEmail('E-mail já utilizado');
+    //           objeto.props.setErrorEmail('E-mail já utilizado');
     //           break;
     //         case 'auth/invalid-email':
     //           objeto.props.setCorErroEmail('#f00', 4);
-    //           objeto.props.setErroEmail('E-mail inválido');
+    //           objeto.props.setErrorEmail('E-mail inválido');
     //           break;
     //         case 'auth/operation-not-allowed':
     //           objeto.props.setCorErroEmail('#f00', 4);
-    //           objeto.props.setErroEmail('Tente novamente mais tarde!');
+    //           objeto.props.setErrorEmail('Tente novamente mais tarde!');
     //           break;
     //         case 'auth/weak-password':
     //           objeto.props.setCorErroSenha('#f00', 4);
