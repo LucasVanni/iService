@@ -10,7 +10,14 @@ import {
 
 import {connect} from 'react-redux';
 
-import {setEmailField, setPasswordField} from '../actions/AuthActions';
+import {
+  setEmailField,
+  setEmailBorderColorLogin,
+  setPasswordField,
+  setPassBorderColorLogin,
+  doLogin,
+  setErrorGeralLogin,
+} from '../actions/AuthActions';
 
 import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
 
@@ -27,7 +34,25 @@ export class Login extends Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
+
   render() {
+    function loginAction(objeto) {
+      if (objeto.props.emailValid == true && objeto.props.passValid == true) {
+        return () =>
+          objeto.props.doLogin(objeto, () => {
+            objeto.setState({loading: false});
+          });
+      }
+
+      return null;
+    }
+
     let SignInButtonOpacity = 0.2;
 
     if (this.props.emailValid == true && this.props.passValid == true) {
@@ -55,7 +80,7 @@ export class Login extends Component {
             </View>
             <CamposLogin
               nomeCampo={'E-MAIL'}
-              borderBottomColor={this.props.emailBorderColor}
+              borderBottomColor={this.props.emailBorderColorLogin}
               color={'#fff'}
               secureTextEntry={false}
               value={this.props.email}
@@ -64,7 +89,7 @@ export class Login extends Component {
             />
             <CamposLogin
               nomeCampo={'SENHA'}
-              borderBottomColor={this.props.passBorderColor}
+              borderBottomColor={this.props.passBorderColorLogin}
               color={'#fff'}
               secureTextEntry={true}
               value={this.props.pass}
@@ -98,9 +123,14 @@ export class Login extends Component {
                 icon={faAngleRight}
                 size={60}
                 style={styles.signInButtonIcon}
-                onPress={() => {}}
+                onPress={loginAction(this)}
               />
             </TouchableHighlight>
+            {this.props.errorGeralLogin == null ? null : (
+              <View style={styles.viewError}>
+                <Text style={styles.error}>{this.props.errorGeralLogin}</Text>
+              </View>
+            )}
           </KeyboardAvoidingView>
         </View>
       </AnimatedLinearGradient>
@@ -158,16 +188,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  viewError: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 0,
+    marginBottom: 10,
+  },
+  error: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
 });
 
 const mapStateToProps = state => {
   return {
     status: state.auth.status,
+
+    errorGeralLogin: state.auth.errorGeralLogin,
+
     email: state.auth.email,
-    emailBorderColor: state.auth.emailBorderColor,
+    emailBorderColorLogin: state.auth.emailBorderColorLogin,
     emailValid: state.auth.emailValid,
+
     pass: state.auth.pass,
-    passBorderColor: state.auth.passBorderColor,
+    passBorderColorLogin: state.auth.passBorderColorLogin,
     passValid: state.auth.passValid,
   };
 };
@@ -176,7 +221,11 @@ const LoginConnect = connect(
   mapStateToProps,
   {
     setEmailField,
+    setEmailBorderColorLogin,
     setPasswordField,
+    setPassBorderColorLogin,
+    doLogin,
+    setErrorGeralLogin,
   },
 )(Login);
 

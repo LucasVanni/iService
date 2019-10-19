@@ -14,11 +14,10 @@ import {Avatar} from 'react-native-elements';
 
 import ImagePicker from 'react-native-image-picker';
 
-import RNFetchBlob from 'rn-fetch-blob';
-
 import AdicionarProfissao from '../AdicionarProfissao';
 
 import {
+  setErrorGeral,
   setUriAvatar,
   setErrorAvatar,
   setCorErrorAvatar,
@@ -40,8 +39,6 @@ import {
   editProfessionChoose,
   providerSignUp,
 } from '../../actions/AuthActions';
-
-window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
 
 import CamposCadastro from '../CamposCadastro/';
 
@@ -211,6 +208,12 @@ export class ProviderSignUp extends Component {
           </View>
         </View>
 
+        {this.props.errorGeral == null ? null : (
+          <View style={styles.viewError}>
+            <Text style={styles.error}>{this.props.errorGeral}</Text>
+          </View>
+        )}
+
         <View style={styles.viewBotaoCadastrar}>
           <TouchableHighlight
             style={styles.estiloBotaoCadastrar}
@@ -225,11 +228,6 @@ export class ProviderSignUp extends Component {
           </TouchableHighlight>
           {/* <LoadingItem visible={this.state.loading} /> */}
         </View>
-        {this.props.erroGeral == null ? null : (
-          <View style={viewErro}>
-            <Text style={erro}>{this.props.erroGeral}</Text>
-          </View>
-        )}
       </ScrollView>
     );
   }
@@ -358,6 +356,8 @@ const styles = StyleSheet.create({
 
 const mapStatetoProps = state => {
   return {
+    errorGeral: state.auth.errorGeral,
+
     avatar: state.auth.avatar,
     avatarBorderColor: state.auth.avatarBorderColor,
     messageAvatarError: state.auth.messageAvatarError,
@@ -391,6 +391,8 @@ const mapStatetoProps = state => {
 const ProviderSignUpConnect = connect(
   mapStatetoProps,
   {
+    setErrorGeral,
+
     setUriAvatar,
     setErrorAvatar,
     setCorErrorAvatar,

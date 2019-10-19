@@ -1,4 +1,9 @@
-import {makeSendEmail} from '../APIS/iServiceAPI';
+import {
+  makeLogin,
+  makeSendEmail,
+  makeProviderSignUp,
+  makeUserSignUp,
+} from '../APIS/iServiceAPI';
 import firebase from '../APIS/FireApi';
 
 const nomeCompleto = /^[a-zA-Z]+ +[a-zA-Z]+$/;
@@ -236,6 +241,15 @@ export const setPassBorderColor = passBorderColor => {
   };
 };
 
+export const setPassBorderColorLogin = passBorderColorLogin => {
+  return {
+    type: 'setPassBorderColorLogin',
+    payload: {
+      passBorderColorLogin,
+    },
+  };
+};
+
 export const setErrorPassConfirm = errorPassConfirm => {
   return {
     type: 'setErrorPassConfirm',
@@ -304,6 +318,33 @@ export const setEmailBorderColor = emailBorderColor => {
     type: 'setEmailBorderColor',
     payload: {
       emailBorderColor,
+    },
+  };
+};
+
+export const setEmailBorderColorLogin = emailBorderColorLogin => {
+  return {
+    type: 'setEmailBorderColorLogin',
+    payload: {
+      emailBorderColorLogin,
+    },
+  };
+};
+
+export const setErrorGeralLogin = errorGeralLogin => {
+  return {
+    type: 'setErrorGeralLogin',
+    payload: {
+      errorGeralLogin,
+    },
+  };
+};
+
+export const setErrorGeral = errorGeral => {
+  return {
+    type: 'setErrorGeral',
+    payload: {
+      errorGeral,
     },
   };
 };
@@ -393,86 +434,48 @@ export const providerSignUp = (objeto, callback) => {
       callback();
     }
     if (cadastro === true) {
-      alert('Cadastrado');
-      // firebase
-      //   .auth()
-      //   .createUserWithEmailAndPassword(objeto.props.email, objeto.props.senha)
-      //   .then(() => {
-      //     let uid = firebase.auth().currentUser.uid;
-      //     let uri = objeto.props.avatar.uri.replace('file://', '');
-      //     let mime = 'image/jpeg';
-      //     let avatar = firebase
-      //       .storage()
-      //       .ref()
-      //       .child('prestadores')
-      //       .child(`${uid}.jpg`);
-      //     RNFetchBlob.fs
-      //       .readFile(uri, 'base64')
-      //       .then(data => {
-      //         return RNFetchBlob.polyfill.Blob.build(data, {
-      //           type: `${mime};BASE64`,
-      //         });
-      //       })
-      //       .then(blob => {
-      //         avatar.put(blob, {contentType: mime}).on(
-      //           'state_changed',
-      //           snapshot => {},
-      //           error => {
-      //             alert(error.code);
-      //           },
-      //           () => {
-      //             avatar.getDownloadURL().then(url => {
-      //               // CADASTRO DO NOME NO BANCO DE DADOS
-      //               firebase
-      //                 .database()
-      //                 .ref('usuarios')
-      //                 .child(uid)
-      //                 .set({
-      //                   nome: objeto.props.nome,
-      //                   nomeProfissao:
-      //                     objeto.props.profissaoEscolhida.nomeProfissao,
-      //                   type: 'User/Provider',
-      //                   profileImage: url,
-      //                   coords: {
-      //                     latitude: 0,
-      //                     longitude: 0,
-      //                     latitudeDelta: 0,
-      //                     longitudeDelta: 0,
-      //                   },
-      //                 });
-      //               callback();
-      //               dispatch({
-      //                 type: 'editUid',
-      //                 payload: {
-      //                   uid,
-      //                 },
-      //               });
-      //             });
-      //           },
-      //         );
-      //       });
-      //   })
-      //   .catch(error => {
-      //     switch (error.code) {
-      //       case 'auth/email-already-in-use':
-      //         objeto.props.setCorErroEmail('#f00', 4);
-      //         objeto.props.setErrorEmail('E-mail já utilizado');
-      //         break;
-      //       case 'auth/invalid-email':
-      //         objeto.props.setCorErroEmail('#f00', 4);
-      //         objeto.props.setErrorEmail('E-mail inválido');
-      //         break;
-      //       case 'auth/operation-not-allowed':
-      //         objeto.props.setCorErroEmail('#f00', 4);
-      //         objeto.props.setErrorEmail('Tente novamente mais tarde!');
-      //         break;
-      //       case 'auth/weak-password':
-      //         objeto.props.setCorErroSenha('#f00', 4);
-      //         objeto.props.setErroSenha('A senha deve ter mais que 6 digitos');
-      //         break;
-      //     }
-      //   });
-      // callback();
+      makeProviderSignUp(objeto)
+        .then(resolveProps => {
+          callback();
+
+          dispatch({
+            type: 'changeStatus',
+            payload: {
+              status: resolveProps.status,
+            },
+          });
+        })
+        .catch(rejectProps => {
+          switch (rejectProps.error.code) {
+            case 'auth/email-already-in-use':
+              objeto.props.setEmailBorderColor('#f00');
+              objeto.props.setErrorGeral('E-mail já utilizado!');
+              break;
+            case 'auth/invalid-email':
+              objeto.props.setEmailBorderColor('#f00');
+              objeto.props.setErrorGeral('E-mail inválido!');
+              break;
+            case 'auth/operation-not-allowed':
+              objeto.props.setErrorGeral('Tente novamente mais tarde!');
+              break;
+            case 'auth/weak-password':
+              objeto.props.setPassBorderColor('#f00');
+              objeto.props.setErrorGeral('A senha deve ter mais que 6 digitos');
+              break;
+            default:
+              objeto.props.setErrorGeral(rejectProps.error.message);
+              break;
+          }
+
+          callback();
+
+          dispatch({
+            type: 'changeStatus',
+            payload: {
+              status: rejectProps.status,
+            },
+          });
+        });
     }
   };
 };
@@ -551,86 +554,95 @@ export const userSignUp = (objeto, callback) => {
       callback();
     }
     if (cadastro === true) {
-      alert('Cadastrado');
-      // firebase
-      //   .auth()
-      //   .createUserWithEmailAndPassword(objeto.props.email, objeto.props.senha)
-      //   .then(() => {
-      //     let uid = firebase.auth().currentUser.uid;
-      //     let uri = objeto.props.avatar.uri.replace('file://', '');
-      //     let mime = 'image/jpeg';
-      //     let avatar = firebase
-      //       .storage()
-      //       .ref()
-      //       .child('prestadores')
-      //       .child(`${uid}.jpg`);
-      //     RNFetchBlob.fs
-      //       .readFile(uri, 'base64')
-      //       .then(data => {
-      //         return RNFetchBlob.polyfill.Blob.build(data, {
-      //           type: `${mime};BASE64`,
-      //         });
-      //       })
-      //       .then(blob => {
-      //         avatar.put(blob, {contentType: mime}).on(
-      //           'state_changed',
-      //           snapshot => {},
-      //           error => {
-      //             alert(error.code);
-      //           },
-      //           () => {
-      //             avatar.getDownloadURL().then(url => {
-      //               // CADASTRO DO NOME NO BANCO DE DADOS
-      //               firebase
-      //                 .database()
-      //                 .ref('usuarios')
-      //                 .child(uid)
-      //                 .set({
-      //                   nome: objeto.props.nome,
-      //                   nomeProfissao:
-      //                     objeto.props.profissaoEscolhida.nomeProfissao,
-      //                   type: 'User/Provider',
-      //                   profileImage: url,
-      //                   coords: {
-      //                     latitude: 0,
-      //                     longitude: 0,
-      //                     latitudeDelta: 0,
-      //                     longitudeDelta: 0,
-      //                   },
-      //                 });
-      //               callback();
-      //               dispatch({
-      //                 type: 'editUid',
-      //                 payload: {
-      //                   uid,
-      //                 },
-      //               });
-      //             });
-      //           },
-      //         );
-      //       });
-      //   })
-      //   .catch(error => {
-      //     switch (error.code) {
-      //       case 'auth/email-already-in-use':
-      //         objeto.props.setCorErroEmail('#f00', 4);
-      //         objeto.props.setErrorEmail('E-mail já utilizado');
-      //         break;
-      //       case 'auth/invalid-email':
-      //         objeto.props.setCorErroEmail('#f00', 4);
-      //         objeto.props.setErrorEmail('E-mail inválido');
-      //         break;
-      //       case 'auth/operation-not-allowed':
-      //         objeto.props.setCorErroEmail('#f00', 4);
-      //         objeto.props.setErrorEmail('Tente novamente mais tarde!');
-      //         break;
-      //       case 'auth/weak-password':
-      //         objeto.props.setCorErroSenha('#f00', 4);
-      //         objeto.props.setErroSenha('A senha deve ter mais que 6 digitos');
-      //         break;
-      //     }
-      //   });
-      // callback();
+      makeUserSignUp(objeto, callback)
+        .then(resolveProps => {
+          callback();
+          dispatch({
+            type: 'changeStatus',
+            payload: {
+              status: resolveProps.status,
+            },
+          });
+        })
+        .catch(rejectProps => {
+          switch (rejectProps.error.code) {
+            case 'auth/email-already-in-use':
+              objeto.props.setEmailBorderColor('#f00');
+              objeto.props.setErrorGeral('E-mail já utilizado!');
+              break;
+            case 'auth/invalid-email':
+              objeto.props.setEmailBorderColor('#f00');
+              objeto.props.setErrorGeral('E-mail inválido!');
+              break;
+            case 'auth/operation-not-allowed':
+              objeto.props.setErrorGeral('Tente novamente mais tarde!');
+              break;
+            case 'auth/weak-password':
+              objeto.props.setPassBorderColor('#f00');
+              objeto.props.setErrorGeral('A senha deve ter mais que 6 digitos');
+              break;
+            default:
+              objeto.props.setErrorGeral(rejectProps.error.message);
+              break;
+          }
+
+          callback();
+
+          dispatch({
+            type: 'changeStatus',
+            payload: {
+              status: rejectProps.status,
+            },
+          });
+        });
     }
+  };
+};
+
+export const doLogin = (objeto, callback) => {
+  return dispatch => {
+    makeLogin(objeto)
+      .then(resolveProps => {
+        dispatch({
+          type: 'changeStatus',
+          payload: {
+            status: resolveProps.status,
+          },
+        });
+        callback();
+      })
+      .catch(rejectProps => {
+        console.log(rejectProps);
+        switch (rejectProps.error.code) {
+          case 'auth/user-disabled':
+            objeto.props.setErrorGeralLogin('Seu usuário está desativado');
+            objeto.props.setEmailBorderColorLogin('#f00');
+            objeto.props.setPassBorderColorLogin('#f00');
+            break;
+          case 'auth/user-not-found':
+            objeto.props.setErrorGeralLogin('Usuário não foi encontrado');
+            objeto.props.setEmailBorderColorLogin('#f00');
+            objeto.props.setPassBorderColorLogin('#f00');
+            break;
+          case 'auth/wrong-password':
+            objeto.props.setErrorGeralLogin('E-mail e/ou senha incorretos!');
+            objeto.props.setEmailBorderColorLogin('#f00');
+            objeto.props.setPassBorderColorLogin('#f00');
+            break;
+          default:
+            objeto.props.setErrorGeralLogin(rejectProps.error.message);
+            objeto.props.setEmailBorderColorLogin('#f00');
+            objeto.props.setPassBorderColorLogin('#f00');
+            break;
+        }
+
+        dispatch({
+          type: 'changeStatus',
+          payload: {
+            status: rejectProps.status,
+          },
+        });
+        callback();
+      });
   };
 };

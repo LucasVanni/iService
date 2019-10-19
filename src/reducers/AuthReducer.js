@@ -1,6 +1,12 @@
 const initialState = {
   status: 0, // 0 -> Não verificado, 1 -> Logado, 2 -> Não logado.
 
+  errorGeral: null,
+
+  emailBorderColorLogin: '#fff',
+  passBorderColorLogin: '#fff',
+  errorGeralLogin: null,
+
   name: '',
   nameBorderColor: '#fff',
   errorName: null,
@@ -46,6 +52,12 @@ const AuthReducer = (state = initialState, action) => {
 
     state.errorEmail = null;
     state.emailBorderColor = '#fff';
+    state.errorGeral = null;
+
+    //Aplicado apenas na tela de login
+    state.errorGeralLogin = null;
+    state.emailBorderColorLogin = '#fff';
+    state.passBorderColorLogin = '#fff';
 
     return {...state, email: action.payload.email};
   }
@@ -68,6 +80,12 @@ const AuthReducer = (state = initialState, action) => {
     state.errorPass = null;
     state.passConfirmBorderColor = '#fff';
     state.errorPassConfirm = null;
+    state.errorGeral = null;
+
+    //Aplicado apenas na tela de login
+    state.errorGeralLogin = null;
+    state.emailBorderColorLogin = '#fff';
+    state.passBorderColorLogin = '#fff';
 
     return {...state, pass: action.payload.pass};
   }
@@ -167,10 +185,24 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, errorEmail: action.payload.errorEmail};
   }
 
+  if (action.type === 'setEmailBorderColorLogin') {
+    return {
+      ...state,
+      emailBorderColorLogin: action.payload.emailBorderColorLogin,
+    };
+  }
+
   if (action.type === 'setPassBorderColor') {
     return {
       ...state,
       passBorderColor: action.payload.passBorderColor,
+    };
+  }
+
+  if (action.type === 'setPassBorderColorLogin') {
+    return {
+      ...state,
+      passBorderColorLogin: action.payload.passBorderColorLogin,
     };
   }
 
@@ -192,6 +224,20 @@ const AuthReducer = (state = initialState, action) => {
     return {
       ...state,
       errorPassConfirm: action.payload.errorPassConfirm,
+    };
+  }
+
+  if (action.type === 'setErrorGeralLogin') {
+    return {
+      ...state,
+      errorGeralLogin: action.payload.errorGeralLogin,
+    };
+  }
+
+  if (action.type === 'setErrorGeral') {
+    return {
+      ...state,
+      errorGeral: action.payload.errorGeral,
     };
   }
 
