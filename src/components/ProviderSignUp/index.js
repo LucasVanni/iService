@@ -16,6 +16,8 @@ import ImagePicker from 'react-native-image-picker';
 
 import AdicionarProfissao from '../AdicionarProfissao';
 
+import LoadingItem from '../LoadingItem/';
+
 import {
   setErrorGeral,
   setUriAvatar,
@@ -45,6 +47,10 @@ import CamposCadastro from '../CamposCadastro/';
 export class ProviderSignUp extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+    };
 
     this.addImg = this.addImg.bind(this);
     this.props.getListaProfissoes();
@@ -226,7 +232,7 @@ export class ProviderSignUp extends Component {
             }}>
             <Text style={styles.txtBtnCadastrar}>Cadastrar</Text>
           </TouchableHighlight>
-          {/* <LoadingItem visible={this.state.loading} /> */}
+          <LoadingItem visible={this.state.loading} />
         </View>
       </ScrollView>
     );

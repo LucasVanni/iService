@@ -29,6 +29,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 
+import LoadingItem from '../components/LoadingItem/';
+
 export class Login extends Component {
   static navigationOptions = {
     header: null,
@@ -44,10 +46,12 @@ export class Login extends Component {
   render() {
     function loginAction(objeto) {
       if (objeto.props.emailValid == true && objeto.props.passValid == true) {
-        return () =>
+        return () => {
+          objeto.setState({loading: true});
           objeto.props.doLogin(objeto, () => {
             objeto.setState({loading: false});
           });
+        };
       }
 
       return null;
@@ -132,6 +136,7 @@ export class Login extends Component {
               </View>
             )}
           </KeyboardAvoidingView>
+          <LoadingItem visible={this.state.loading} />
         </View>
       </AnimatedLinearGradient>
     );

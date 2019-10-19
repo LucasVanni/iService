@@ -36,9 +36,15 @@ import {
 
 import CamposCadastro from '../CamposCadastro/';
 
+import LoadingItem from '../LoadingItem/';
+
 export class UserSignUp extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+    };
 
     this.addImg = this.addImg.bind(this);
   }
@@ -193,7 +199,7 @@ export class UserSignUp extends Component {
             }}>
             <Text style={styles.txtBtnCadastrar}>Cadastrar</Text>
           </TouchableHighlight>
-          {/* <LoadingItem visible={this.state.loading} /> */}
+          <LoadingItem visible={this.state.loading} />
         </View>
       </ScrollView>
     );

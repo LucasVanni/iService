@@ -60,6 +60,7 @@ export class ForgotPassword extends Component {
             <View style={styles.header}>
               <Text style={styles.textHeader}>Recuperar Senha</Text>
             </View>
+
             <CamposLogin
               nomeCampo={'E-MAIL'}
               borderBottomColor={this.props.emailBorderColor}
