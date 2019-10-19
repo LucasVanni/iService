@@ -13,7 +13,7 @@ import ProviderSignUp from '../components/ProviderSignUp';
 
 import CheckBox from '../components/CheckBox';
 
-export class ForgotPassword extends Component {
+export class SignUp extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -77,20 +77,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
-  return {
-    status: state.auth.status,
-    email: state.auth.email,
-    emailBorderColor: state.auth.emailBorderColor,
-    emailValid: state.auth.emailValid,
-  };
+const mapStateToProps = () => {
+  return {};
 };
 
-const ForgotPasswordConnect = connect(
-  mapStateToProps,
-  {
-    setEmailField,
-  },
-)(ForgotPassword);
+const SignUpConnect = connect(mapStateToProps)(SignUp);
 
-export default ForgotPasswordConnect;
+export default SignUpConnect;

@@ -38,17 +38,14 @@ const AuthReducer = (state = initialState, action) => {
   if (action.type == 'setEmailField') {
     let re = /[a-z0-9!#$%&'*+\/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9][a-z0-9-]*[a-z0-9]/;
 
-    if (action.payload.email == '') {
-      state.emailBorderColor = '#fff';
+    if (re.test(action.payload.email.toLowerCase())) {
+      state.emailValid = true;
     } else {
-      if (re.test(action.payload.email.toLowerCase())) {
-        state.emailValid = true;
-        state.emailBorderColor = '#fff';
-      } else {
-        state.emailValid = false;
-        //state.emailBorderColor = '#f00';
-      }
+      state.emailValid = false;
     }
+
+    state.errorEmail = null;
+    state.emailBorderColor = '#fff';
 
     return {...state, email: action.payload.email};
   }

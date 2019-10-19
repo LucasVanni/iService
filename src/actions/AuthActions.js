@@ -1,6 +1,13 @@
 import {makeSendEmail} from '../APIS/iServiceAPI';
 import firebase from '../APIS/FireApi';
 
+const nomeCompleto = /^[a-zA-Z]+ +[a-zA-Z]+$/;
+const nomeCompleto2 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
+const nomeCompleto3 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
+const nomeCompleto4 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
+
+const re = /[a-z0-9!#$%&'*+\/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9][a-z0-9-]*[a-z0-9]/;
+
 export const checkLogin = () => {
   // Incompleto
   return {
@@ -308,7 +315,6 @@ export const providerSignUp = (objeto, callback) => {
     if (objeto.props.pass != objeto.props.passConfirm) {
       objeto.props.setPassBorderColor('#f00');
       objeto.props.setErrorPass('As senhas não batem.');
-
       objeto.props.setPassConfirmBorderColor('#f00');
       objeto.props.setErrorPassConfirm('As senhas não batem.');
       cadastro = false;
@@ -330,6 +336,15 @@ export const providerSignUp = (objeto, callback) => {
       objeto.props.setEmailBorderColor('#f00');
       objeto.props.setErrorEmail('Campo e-mail obrigatório');
       cadastro = false;
+    } else {
+      if (re.test(objeto.props.email)) {
+        objeto.props.setEmailBorderColor('#fff');
+        objeto.props.setErrorEmail(null);
+      } else {
+        objeto.props.setEmailBorderColor('#f00');
+        objeto.props.setErrorEmail('Verifique se o campo está correto');
+        cadastro = false;
+      }
     }
 
     if (objeto.props.pass == '') {
@@ -337,13 +352,11 @@ export const providerSignUp = (objeto, callback) => {
       objeto.props.setErrorPass('Campo senha obrigatório');
       cadastro = false;
     }
-
     if (objeto.props.passConfirm == '') {
       objeto.props.setPassConfirmBorderColor('#f00', 4);
       objeto.props.setErrorPassConfirm('Campo confirmar senha obrigatório');
       cadastro = false;
     }
-
     if (
       objeto.props.professionChoose.key == 0 ||
       objeto.props.professionChoose.key == undefined
@@ -356,122 +369,268 @@ export const providerSignUp = (objeto, callback) => {
       objeto.props.setErrorPicker(null);
     }
 
-    // nomeCompleto = /^[a-zA-Z]+ +[a-zA-Z]+$/;
-    // nomeCompleto2 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
-    // nomeCompleto3 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
-    // nomeCompleto4 = /^[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+ +[a-zA-Z]+$/;
+    if (objeto.props.name) {
+      if (
+        nomeCompleto.test(objeto.props.name) ||
+        nomeCompleto2.test(objeto.props.name) ||
+        nomeCompleto3.test(objeto.props.name) ||
+        nomeCompleto4.test(objeto.props.name)
+      ) {
+        objeto.props.setNameBorderColor('#fff');
+        objeto.props.setErrorName(null);
+      } else {
+        if (objeto.props.name == '') {
+          objeto.props.setNameBorderColor('#fff');
+          objeto.props.setErrorName(null);
+        } else {
+          objeto.props.setNameBorderColor('#f00');
+          objeto.props.setErrorName('Digite seu nome completo');
+          cadastro = false;
+        }
+      }
+    }
+    if (cadastro === false) {
+      callback();
+    }
+    if (cadastro === true) {
+      alert('Cadastrado');
+      // firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(objeto.props.email, objeto.props.senha)
+      //   .then(() => {
+      //     let uid = firebase.auth().currentUser.uid;
+      //     let uri = objeto.props.avatar.uri.replace('file://', '');
+      //     let mime = 'image/jpeg';
+      //     let avatar = firebase
+      //       .storage()
+      //       .ref()
+      //       .child('prestadores')
+      //       .child(`${uid}.jpg`);
+      //     RNFetchBlob.fs
+      //       .readFile(uri, 'base64')
+      //       .then(data => {
+      //         return RNFetchBlob.polyfill.Blob.build(data, {
+      //           type: `${mime};BASE64`,
+      //         });
+      //       })
+      //       .then(blob => {
+      //         avatar.put(blob, {contentType: mime}).on(
+      //           'state_changed',
+      //           snapshot => {},
+      //           error => {
+      //             alert(error.code);
+      //           },
+      //           () => {
+      //             avatar.getDownloadURL().then(url => {
+      //               // CADASTRO DO NOME NO BANCO DE DADOS
+      //               firebase
+      //                 .database()
+      //                 .ref('usuarios')
+      //                 .child(uid)
+      //                 .set({
+      //                   nome: objeto.props.nome,
+      //                   nomeProfissao:
+      //                     objeto.props.profissaoEscolhida.nomeProfissao,
+      //                   type: 'User/Provider',
+      //                   profileImage: url,
+      //                   coords: {
+      //                     latitude: 0,
+      //                     longitude: 0,
+      //                     latitudeDelta: 0,
+      //                     longitudeDelta: 0,
+      //                   },
+      //                 });
+      //               callback();
+      //               dispatch({
+      //                 type: 'editUid',
+      //                 payload: {
+      //                   uid,
+      //                 },
+      //               });
+      //             });
+      //           },
+      //         );
+      //       });
+      //   })
+      //   .catch(error => {
+      //     switch (error.code) {
+      //       case 'auth/email-already-in-use':
+      //         objeto.props.setCorErroEmail('#f00', 4);
+      //         objeto.props.setErrorEmail('E-mail já utilizado');
+      //         break;
+      //       case 'auth/invalid-email':
+      //         objeto.props.setCorErroEmail('#f00', 4);
+      //         objeto.props.setErrorEmail('E-mail inválido');
+      //         break;
+      //       case 'auth/operation-not-allowed':
+      //         objeto.props.setCorErroEmail('#f00', 4);
+      //         objeto.props.setErrorEmail('Tente novamente mais tarde!');
+      //         break;
+      //       case 'auth/weak-password':
+      //         objeto.props.setCorErroSenha('#f00', 4);
+      //         objeto.props.setErroSenha('A senha deve ter mais que 6 digitos');
+      //         break;
+      //     }
+      //   });
+      // callback();
+    }
+  };
+};
 
-    // if (objeto.props.nome) {
-    //   if (
-    //     nomeCompleto.test(objeto.props.nome) ||
-    //     nomeCompleto2.test(objeto.props.nome) ||
-    //     nomeCompleto3.test(objeto.props.nome) ||
-    //     nomeCompleto4.test(objeto.props.nome)
-    //   ) {
-    //     objeto.props.setCorErroNome('#fff', 2);
-    //     objeto.props.setErroNome(null);
-    //   } else {
-    //     if (nome == '') {
-    //       objeto.props.setCorErroNome('#fff', 2);
-    //       objeto.props.setErroNome(null);
-    //     } else {
-    //       objeto.props.setCorErroNome('#f00', 4);
-    //       objeto.props.setErroNome('Digite seu nome completo');
-    //       cadastro = false;
-    //     }
-    //   }
-    // }
+export const userSignUp = (objeto, callback) => {
+  return dispatch => {
+    let cadastro = true;
 
-    // if (cadastro === false) {
-    //   callback();
-    // }
+    if (objeto.props.pass != objeto.props.passConfirm) {
+      objeto.props.setPassBorderColor('#f00');
+      objeto.props.setErrorPass('As senhas não batem.');
+      objeto.props.setPassConfirmBorderColor('#f00');
+      objeto.props.setErrorPassConfirm('As senhas não batem.');
+      cadastro = false;
+    }
 
-    // if (cadastro === true) {
-    //   firebase
-    //     .auth()
-    //     .createUserWithEmailAndPassword(objeto.props.email, objeto.props.senha)
-    //     .then(() => {
-    //       let uid = firebase.auth().currentUser.uid;
+    if (objeto.props.name == '') {
+      objeto.props.setErrorName('Campo nome completo obrigatório');
+      objeto.props.setNameBorderColor('#f00');
+      cadastro = false;
+    }
 
-    //       let uri = objeto.props.avatar.uri.replace('file://', '');
+    if (objeto.props.avatar == null) {
+      objeto.props.setErrorAvatar('A inserção de um avatar é obrigatório');
+      objeto.props.setCorErrorAvatar('#f00');
+      cadastro = false;
+    }
 
-    //       let mime = 'image/jpeg';
+    if (objeto.props.email == '') {
+      objeto.props.setEmailBorderColor('#f00');
+      objeto.props.setErrorEmail('Campo e-mail obrigatório');
+      cadastro = false;
+    } else {
+      if (re.test(objeto.props.email)) {
+        objeto.props.setEmailBorderColor('#fff');
+        objeto.props.setErrorEmail(null);
+      } else {
+        objeto.props.setEmailBorderColor('#f00');
+        objeto.props.setErrorEmail('Verifique se o campo está correto');
+        cadastro = false;
+      }
+    }
 
-    //       let avatar = firebase
-    //         .storage()
-    //         .ref()
-    //         .child('prestadores')
-    //         .child(`${uid}.jpg`);
+    if (objeto.props.pass == '') {
+      objeto.props.setPassBorderColor('#f00');
+      objeto.props.setErrorPass('Campo senha obrigatório');
+      cadastro = false;
+    }
+    if (objeto.props.passConfirm == '') {
+      objeto.props.setPassConfirmBorderColor('#f00', 4);
+      objeto.props.setErrorPassConfirm('Campo confirmar senha obrigatório');
+      cadastro = false;
+    }
 
-    //       RNFetchBlob.fs
-    //         .readFile(uri, 'base64')
-    //         .then(data => {
-    //           return RNFetchBlob.polyfill.Blob.build(data, {
-    //             type: `${mime};BASE64`,
-    //           });
-    //         })
-    //         .then(blob => {
-    //           avatar.put(blob, {contentType: mime}).on(
-    //             'state_changed',
-    //             snapshot => {},
-    //             error => {
-    //               alert(error.code);
-    //             },
-    //             () => {
-    //               avatar.getDownloadURL().then(url => {
-    //                 // CADASTRO DO NOME NO BANCO DE DADOS
-    //                 firebase
-    //                   .database()
-    //                   .ref('usuarios')
-    //                   .child(uid)
-    //                   .set({
-    //                     nome: objeto.props.nome,
-    //                     nomeProfissao:
-    //                       objeto.props.profissaoEscolhida.nomeProfissao,
-    //                     type: 'User/Provider',
-    //                     profileImage: url,
-    //                     coords: {
-    //                       latitude: 0,
-    //                       longitude: 0,
-    //                       latitudeDelta: 0,
-    //                       longitudeDelta: 0,
-    //                     },
-    //                   });
-
-    //                 callback();
-
-    //                 dispatch({
-    //                   type: 'editUid',
-    //                   payload: {
-    //                     uid,
-    //                   },
-    //                 });
-    //               });
-    //             },
-    //           );
-    //         });
-    //     })
-    //     .catch(error => {
-    //       switch (error.code) {
-    //         case 'auth/email-already-in-use':
-    //           objeto.props.setCorErroEmail('#f00', 4);
-    //           objeto.props.setErrorEmail('E-mail já utilizado');
-    //           break;
-    //         case 'auth/invalid-email':
-    //           objeto.props.setCorErroEmail('#f00', 4);
-    //           objeto.props.setErrorEmail('E-mail inválido');
-    //           break;
-    //         case 'auth/operation-not-allowed':
-    //           objeto.props.setCorErroEmail('#f00', 4);
-    //           objeto.props.setErrorEmail('Tente novamente mais tarde!');
-    //           break;
-    //         case 'auth/weak-password':
-    //           objeto.props.setCorErroSenha('#f00', 4);
-    //           objeto.props.setErroSenha('A senha deve ter mais que 6 digitos');
-    //           break;
-    //       }
-    //     });
-    //   callback();
-    // }
+    if (objeto.props.name) {
+      if (
+        nomeCompleto.test(objeto.props.name) ||
+        nomeCompleto2.test(objeto.props.name) ||
+        nomeCompleto3.test(objeto.props.name) ||
+        nomeCompleto4.test(objeto.props.name)
+      ) {
+        objeto.props.setNameBorderColor('#fff');
+        objeto.props.setErrorName(null);
+      } else {
+        if (objeto.props.name == '') {
+          objeto.props.setNameBorderColor('#fff');
+          objeto.props.setErrorName(null);
+        } else {
+          objeto.props.setNameBorderColor('#f00');
+          objeto.props.setErrorName('Digite seu nome completo');
+          cadastro = false;
+        }
+      }
+    }
+    if (cadastro === false) {
+      callback();
+    }
+    if (cadastro === true) {
+      alert('Cadastrado');
+      // firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(objeto.props.email, objeto.props.senha)
+      //   .then(() => {
+      //     let uid = firebase.auth().currentUser.uid;
+      //     let uri = objeto.props.avatar.uri.replace('file://', '');
+      //     let mime = 'image/jpeg';
+      //     let avatar = firebase
+      //       .storage()
+      //       .ref()
+      //       .child('prestadores')
+      //       .child(`${uid}.jpg`);
+      //     RNFetchBlob.fs
+      //       .readFile(uri, 'base64')
+      //       .then(data => {
+      //         return RNFetchBlob.polyfill.Blob.build(data, {
+      //           type: `${mime};BASE64`,
+      //         });
+      //       })
+      //       .then(blob => {
+      //         avatar.put(blob, {contentType: mime}).on(
+      //           'state_changed',
+      //           snapshot => {},
+      //           error => {
+      //             alert(error.code);
+      //           },
+      //           () => {
+      //             avatar.getDownloadURL().then(url => {
+      //               // CADASTRO DO NOME NO BANCO DE DADOS
+      //               firebase
+      //                 .database()
+      //                 .ref('usuarios')
+      //                 .child(uid)
+      //                 .set({
+      //                   nome: objeto.props.nome,
+      //                   nomeProfissao:
+      //                     objeto.props.profissaoEscolhida.nomeProfissao,
+      //                   type: 'User/Provider',
+      //                   profileImage: url,
+      //                   coords: {
+      //                     latitude: 0,
+      //                     longitude: 0,
+      //                     latitudeDelta: 0,
+      //                     longitudeDelta: 0,
+      //                   },
+      //                 });
+      //               callback();
+      //               dispatch({
+      //                 type: 'editUid',
+      //                 payload: {
+      //                   uid,
+      //                 },
+      //               });
+      //             });
+      //           },
+      //         );
+      //       });
+      //   })
+      //   .catch(error => {
+      //     switch (error.code) {
+      //       case 'auth/email-already-in-use':
+      //         objeto.props.setCorErroEmail('#f00', 4);
+      //         objeto.props.setErrorEmail('E-mail já utilizado');
+      //         break;
+      //       case 'auth/invalid-email':
+      //         objeto.props.setCorErroEmail('#f00', 4);
+      //         objeto.props.setErrorEmail('E-mail inválido');
+      //         break;
+      //       case 'auth/operation-not-allowed':
+      //         objeto.props.setCorErroEmail('#f00', 4);
+      //         objeto.props.setErrorEmail('Tente novamente mais tarde!');
+      //         break;
+      //       case 'auth/weak-password':
+      //         objeto.props.setCorErroSenha('#f00', 4);
+      //         objeto.props.setErroSenha('A senha deve ter mais que 6 digitos');
+      //         break;
+      //     }
+      //   });
+      // callback();
+    }
   };
 };

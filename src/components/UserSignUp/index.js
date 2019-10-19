@@ -34,11 +34,7 @@ import {
   setPasswordConfirmField,
   setErrorPassConfirm,
   setPassConfirmBorderColor,
-  getListaProfissoes,
-  setPickerBorderColor,
-  setErrorPicker,
-  editProfessionChoose,
-  providerSignUp,
+  userSignUp,
 } from '../../actions/AuthActions';
 
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
@@ -50,7 +46,6 @@ export class UserSignUp extends Component {
     super(props);
 
     this.addImg = this.addImg.bind(this);
-    this.props.getListaProfissoes();
   }
 
   addImg() {
@@ -173,7 +168,7 @@ export class UserSignUp extends Component {
               secureTextEntry={true}
               placeholder="Digite sua senha novamente"
               placeholderTextColor={'rgba(255,255,255, 0.6)'}
-              value={this.props.passConfrim}
+              value={this.props.passConfirm}
               validState={this.props.passConfirmValid}
               actions={this.props.setPasswordConfirmField}
             />
@@ -191,7 +186,7 @@ export class UserSignUp extends Component {
             underlayColor={'#1f33c9'}
             onPress={() => {
               this.setState({loading: true});
-              this.props.providerSignUp(this, () =>
+              this.props.userSignUp(this, () =>
                 this.setState({loading: false}),
               );
             }}>
@@ -208,18 +203,6 @@ export class UserSignUp extends Component {
     );
   }
 }
-
-const validateOnSelected = (listaProfissoes, objeto) => {
-  if (listaProfissoes.key == '0' || listaProfissoes.key == undefined) {
-    objeto.props.setPickerBorderColor('#f00');
-    objeto.props.setErrorPicker('Selecione uma profissão');
-  } else {
-    objeto.props.setPickerBorderColor('#fff');
-    objeto.props.setErrorPicker(null);
-  }
-
-  objeto.props.editProfessionChoose(listaProfissoes);
-};
 
 const inserirProfissoes = (value, index) => {
   return <Picker.Item key={index} value={value} label={value.nomeProfissao} />;
@@ -380,11 +363,7 @@ const UserSignUpConnect = connect(
     setEmailField,
     setErrorEmail,
     setEmailBorderColor,
-    getListaProfissoes,
-    setPickerBorderColor,
-    setErrorPicker,
-    editProfessionChoose,
-    providerSignUp,
+    userSignUp,
   },
 )(UserSignUp);
 

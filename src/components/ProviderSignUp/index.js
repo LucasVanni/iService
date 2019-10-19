@@ -173,7 +173,7 @@ export class ProviderSignUp extends Component {
               secureTextEntry={true}
               placeholder="Digite sua senha novamente"
               placeholderTextColor={'rgba(255,255,255, 0.6)'}
-              value={this.props.passConfrim}
+              value={this.props.passConfirm}
               validState={this.props.passConfirmValid}
               actions={this.props.setPasswordConfirmField}
             />
