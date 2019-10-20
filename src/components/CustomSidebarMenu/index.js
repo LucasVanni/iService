@@ -24,7 +24,7 @@ export class CustomSidebarMenu extends Component {
       {
         navOptionThumb: 'chat',
         navOptionName: 'Conversas',
-        screenToNavigate: 'Conversas',
+        screenToNavigate: 'ChatList',
       },
       {
         navOptionThumb: 'exit-to-app',

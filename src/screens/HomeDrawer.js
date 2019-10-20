@@ -13,9 +13,12 @@ import {
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import Home from './Home';
-import Conversas from './Conversas';
+import ChatList from './ChatList';
+import Chats from './Chats';
+import Chat from './Chat';
 import Sair from '../components/Sair/';
 
 import CustomSidebarMenu from '../components/CustomSidebarMenu/';
@@ -43,9 +46,10 @@ class NavigationDrawerStructure extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   menuBar: {
-    color: '#fff',
+    color: '#ff9e29',
   },
 });
 
@@ -53,28 +57,49 @@ const FirstStack = createStackNavigator({
   First: {
     screen: Home,
     navigationOptions: ({navigation}) => ({
-      title: 'Home',
+      title: null,
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerTransparent: true,
+      headerStyle: {
+        backgroundColor: 'transparent',
+      },
+    }),
+  },
+});
+
+const FourthStack = createStackNavigator({
+  Fourth: {
+    screen: Chats,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  Fifty: {
+    screen: Chat,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
+
+const SecondStack = createBottomTabNavigator({
+  Second: {
+    screen: ChatList,
+    navigationOptions: ({navigation}) => ({
+      title: 'Lista de prestadores',
+      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+
       headerStyle: {
         backgroundColor: '#1f33c9',
       },
       headerTintColor: '#fff',
     }),
   },
-});
-
-const SecondStack = createStackNavigator({
-  Second: {
-    screen: Conversas,
-    navigationOptions: ({navigation}) => ({
+  FourthStack: {
+    screen: FourthStack,
+    navigationOptions: {
       title: 'Conversas',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-
-      headerStyle: {
-        backgroundColor: '#1f33c9',
-      },
-      headerTintColor: '#fff',
-    }),
+    },
   },
 });
 
@@ -101,10 +126,10 @@ const HomeDrawer = createDrawerNavigator(
         drawerLabel: 'HOME',
       },
     },
-    Conversas: {
+    ChatList: {
       screen: SecondStack,
       navigationOptions: {
-        drawerLabel: 'Conversas',
+        drawerLabel: 'ChatList',
       },
     },
     Sair: {
