@@ -1,21 +1,23 @@
-import {verifyUserImageUrl} from '../APIS/iServiceAPI';
+import {verifyUserData} from '../APIS/iServiceAPI';
 
-export const getUrlProfileImage = () => {
+export const getUserData = () => {
   return dispatch => {
-    verifyUserImageUrl()
+    verifyUserData()
       .then(resolveProps => {
         dispatch({
-          type: 'setUrlProfileImage',
+          type: 'setUserData',
           payload: {
-            profileUrlImage: resolveProps,
+            profileUrlImage: resolveProps.profileImage,
+            name: resolveProps.name,
           },
         });
       })
       .catch(rejectProps => {
         dispatch({
-          type: 'setUrlProfileImage',
+          type: 'setUserData',
           payload: {
             profileUrlImage: rejectProps,
+            name: rejectProps,
           },
         });
       });

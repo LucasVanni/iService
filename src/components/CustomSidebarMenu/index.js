@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 
-import {getUrlProfileImage, setUrlProfileImage} from '../../actions/HomeAction';
+import {getUserData} from '../../actions/HomeAction';
 
 export class CustomSidebarMenu extends Component {
   constructor() {
@@ -45,7 +45,7 @@ export class CustomSidebarMenu extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    this.props.getUrlProfileImage();
+    this.props.getUserData();
     global.currentScreenIndex = 0;
   }
 
@@ -58,6 +58,12 @@ export class CustomSidebarMenu extends Component {
           source={{uri: `${this.props.profileUrlImage}`}}
           style={styles.sideMenuProfileIcon}
         />
+
+        <View style={{paddingTop: 10}}>
+          <Text style={{color: '#1f33c9', fontSize: 17, fontWeight: 'bold'}}>
+            {this.props.name}
+          </Text>
+        </View>
 
         {/*Divider between Top Image and Sidebar Option*/}
         <View
@@ -130,12 +136,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  return {profileUrlImage: state.home.profileUrlImage};
+  return {
+    name: state.home.name,
+    profileUrlImage: state.home.profileUrlImage,
+  };
 };
 
 const CustomSidebarMenuConnect = connect(
   mapStateToProps,
-  {getUrlProfileImage},
+  {getUserData},
 )(CustomSidebarMenu);
 
 export default CustomSidebarMenuConnect;
