@@ -84,7 +84,6 @@ export class Login extends Component {
         speed={1600}>
         <StatusBar backgroundColor="#1f33c9" barStyle="light-content" />
         <View style={styles.container}>
-          {console.log(this.props.status)}
           <KeyboardAvoidingView
             behavior="padding"
             enabled

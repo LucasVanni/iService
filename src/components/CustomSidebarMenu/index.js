@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 
-import {getUserData} from '../../actions/HomeAction';
+import {getUserData, getUid} from '../../actions/HomeAction';
 
 export class CustomSidebarMenu extends Component {
   constructor() {
@@ -144,7 +144,7 @@ const mapStateToProps = state => {
 
 const CustomSidebarMenuConnect = connect(
   mapStateToProps,
-  {getUserData},
+  {getUserData, getUid},
 )(CustomSidebarMenu);
 
 export default CustomSidebarMenuConnect;

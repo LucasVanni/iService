@@ -1,6 +1,6 @@
 {
   "name": "iService",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -18,10 +18,12 @@
     "react-native": "0.61.2",
     "react-native-animated-linear-gradient": "^1.2.0",
     "react-native-elements": "^1.2.6",
+    "react-native-geolocation-service": "^3.1.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-image-picker": "^1.1.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-maps": "^0.26.1",
+    "react-native-maps-directions": "^1.7.3",
     "react-native-reanimated": "^1.3.0",
     "react-native-screens": "^2.0.0-alpha.4",
     "react-native-svg": "^9.11.1",
