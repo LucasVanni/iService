@@ -1,33 +1,78 @@
 import React, {Component} from 'react';
+import {View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {connect} from 'react-redux';
+import {getListaConversas, setActiveChat} from '../actions/ChatActions';
 
-import {View, Button, StyleSheet} from 'react-native';
+import ConversasItem from '../components/ConversasItem/index';
 
-export default class Chats extends Component {
+export class Chats extends Component {
+  static navigationOptions = {
+    title: 'Conversas',
+    tabBarLabel: 'Conversas',
+  };
+
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      loading: true,
+    };
+  }
+
+  componentDidMount() {
+    this.props.getListaConversas(this.props.uid, () => {
+      this.setState({loading: false});
+    });
+  }
+
+  componentDidUpdate() {
+    if (this.props.chatAtivo !== '') {
+      this.props.navigation.navigate('Conversa', {
+        titulo: this.props.tituloChatAtivo,
+      });
+    }
   }
 
   render() {
     return (
-      <View style={styles.view}>
-        <Button
-          title={'ir para chat'}
-          onPress={() => this.props.navigation.navigate('Fifty')}
+      <View style={styles.container}>
+        {this.state.loading && <ActivityIndicator size="large" />}
+        <FlatList
+          data={this.props.conversas}
+          renderItem={({item}) => (
+            <ConversasItem
+              data={item}
+              onPress={items => conversas(this, items)}
+            />
+          )}
         />
       </View>
     );
   }
 }
 
+const conversas = (objeto, data) => {
+  objeto.props.setActiveChat(data.key);
+};
+
 const styles = StyleSheet.create({
-  view: {
+  container: {
     flex: 1,
-    backgroundColor: 'transparent',
-  },
-  mapView: {
-    flex: 1,
-    zIndex: 1,
   },
 });
+
+const mapStateToProps = state => {
+  return {
+    uid: state.auth.uid,
+    chatAtivo: state.chat.chatAtivo,
+    tituloChatAtivo: state.chat.tituloChatAtivo,
+    conversas: state.chat.conversas,
+  };
+};
+
+const ChatsConnection = connect(
+  mapStateToProps,
+  {getListaConversas, setActiveChat},
+)(Chats);
+
+export default ChatsConnection;
