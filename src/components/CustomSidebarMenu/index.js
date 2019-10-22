@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 
-import {getUserData, getUid} from '../../actions/HomeAction';
+import {getUserData} from '../../actions/HomeAction';
 
 export class CustomSidebarMenu extends Component {
   constructor() {
@@ -45,7 +45,7 @@ export class CustomSidebarMenu extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    this.props.getUserData();
+    this.props.getUserData(this.props.uid);
     global.currentScreenIndex = 0;
   }
 
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
+    uid: state.auth.uid,
     name: state.home.name,
     profileUrlImage: state.home.profileUrlImage,
   };
@@ -144,7 +145,7 @@ const mapStateToProps = state => {
 
 const CustomSidebarMenuConnect = connect(
   mapStateToProps,
-  {getUserData, getUid},
+  {getUserData},
 )(CustomSidebarMenu);
 
 export default CustomSidebarMenuConnect;

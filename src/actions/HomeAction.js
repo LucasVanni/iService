@@ -1,8 +1,8 @@
 import {verifyUserData, setUid} from '../APIS/iServiceAPI';
 
-export const getUserData = () => {
+export const getUserData = uid => {
   return dispatch => {
-    verifyUserData()
+    verifyUserData(uid)
       .then(resolveProps => {
         dispatch({
           type: 'setUserData',
@@ -105,5 +105,16 @@ export const getUrlImage = () => {
           },
         });
       });
+  };
+};
+
+export const setRender = render => {
+  return dispatch => {
+    dispatch({
+      type: 'setRender',
+      payload: {
+        render,
+      },
+    });
   };
 };

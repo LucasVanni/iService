@@ -12,6 +12,7 @@ import {
   Permission,
   PermissionsAndroid,
   TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 
 import CalloutModal from '../components/CalloutModal/';
@@ -26,7 +27,7 @@ import Geolocation from 'react-native-geolocation-service';
 
 import MapViewDirections from 'react-native-maps-directions';
 
-import {getUid} from '../actions/HomeAction';
+import {setRender} from '../actions/HomeAction';
 
 import {
   getPosition,
@@ -40,7 +41,12 @@ export class Home extends Component {
 
     this.state = {
       //Localização do usuário atual
-      currentLocation: null,
+      currentLocation: {
+        latitude: -23.7,
+        longitude: -46.8,
+        latitudeDelta: 0.004,
+        longitudeDelta: 0.004,
+      },
 
       //Localização do prestador
       providerLocation: [],
@@ -48,14 +54,12 @@ export class Home extends Component {
       // Espera o render da imagem
       initialRender: true,
 
-      // Localização da origem
-      originLocation: {
-        latitude: 0,
-        longitude: 0,
-      },
+      destinatioMarker: null,
+
+      prestadorSelecionado: null,
 
       //Localização de destino
-      destLocation: {
+      destination: {
         latitude: 0,
         longitude: 0,
       },
@@ -76,16 +80,17 @@ export class Home extends Component {
     this.contratarPrestador = this.contratarPrestador.bind(this);
 
     this.realignMap = this.realignMap.bind(this);
+    this.props.setRender(false);
   }
 
   UNSAFE_componentWillMount() {
-    this.props.getUid();
+    this.props.setRender(false);
   }
 
   getCurrentLocation = async () => {
     this.setWarning(true, 'Procurando sua localização...');
 
-    await getPosition().then(resolveProps => {
+    await getPosition(this.props.uid).then(resolveProps => {
       resolveProps.currentLocation.map(infos => {
         this.setState({
           currentLocation: {
@@ -95,6 +100,10 @@ export class Home extends Component {
             longitudeDelta: infos.longitudeDelta,
           },
         });
+      });
+
+      this.setState({
+        providerLocation: resolveProps.providerLocation,
       });
     });
     if (await this.requestLocationPermission()) {
@@ -197,30 +206,25 @@ export class Home extends Component {
   contratarPrestador(item) {
     this.setState({modalVisible: false});
 
-    let latitude = item.latitude.toString();
+    this.setState({
+      destination: {
+        latitude: item.latitude,
+        longitude: item.longitude,
+      },
 
-    let longitude = item.longitude.toString();
+      destinatioMarker: 'DestinationMarker',
+    });
 
     setTimeout(() => {
+      this.props.setRender(true);
+    }, 400);
+    setTimeout(() => {
       this.realignMap();
-    }, 2000);
-
-    this.realignMap();
-
-    this.setState({
-      originLocation: {
-        latitude: this.state.currentLocation.latitude,
-        longiude: this.state.currentLocation.longitude,
-      },
-      destLocation: {
-        latitude,
-        longitude,
-      },
-    });
+    }, 1000);
   }
 
   realignMap() {
-    this.map.fitToSuppliedMarkers(['OriginMarker'], {
+    this.map.fitToSuppliedMarkers(['OriginMarker', 'DestinationMarker'], {
       edgePadding: {
         left: 100,
         top: 200,
@@ -234,6 +238,7 @@ export class Home extends Component {
   render() {
     return (
       <View style={styles.view}>
+        <StatusBar backgroundColor="#1f33c9" barStyle="light-content" />
         <MapView
           ref={obj => (this.map = obj)}
           style={styles.mapView}
@@ -250,96 +255,98 @@ export class Home extends Component {
               position.nativeEvent.coordinate.longitude,
               position.nativeEvent.coordinate.latitude,
             ).then(() => {
-              getPosition().then(resolveProps => {
+              getPosition(this.props.uid).then(resolveProps => {
                 this.setState({
                   providerLocation: resolveProps.providerLocation,
-                });
-
-                resolveProps.currentLocation.map(infos => {
-                  this.setState({
-                    currentLocation: {
-                      latitude: infos.latitude,
-                      latitudeDelta: infos.latitudeDelta,
-                      longitude: infos.longitude,
-                      longitudeDelta: infos.longitudeDelta,
-                    },
+                }),
+                  resolveProps.currentLocation.map(infos => {
+                    this.setState({
+                      currentLocation: {
+                        latitude: infos.latitude,
+                        latitudeDelta: infos.latitudeDelta,
+                        longitude: infos.longitude,
+                        longitudeDelta: infos.longitudeDelta,
+                      },
+                    });
                   });
-                });
               });
             });
           }}>
           {this.state.providerLocation != [] &&
-            this.state.providerLocation.map(infos => {
-              if (this.props.userUid != infos.id) {
-                return (
-                  <Marker
-                    identifier={'DestinationMarker'}
-                    anchor={{x: 0.5, y: 0.4}}
-                    coordinate={{
-                      latitude: infos.latitude,
-                      longitude: infos.longitude,
-                    }}>
-                    <View style={styles.markerView}>
-                      <Text style={styles.nomeMarker}>{infos.nome}</Text>
-                      <Image
-                        onLayout={() => this.setState({initialRender: false})}
-                        source={{
-                          uri: infos.profileImage,
-                        }}
-                        style={styles.imgMarker}
-                      />
-                      <Text style={styles.nomeProfissao}>
-                        {infos.nomeProfissao}
-                      </Text>
-                    </View>
+            this.state.providerLocation.map((item, index) => {
+              return (
+                <Marker
+                  key={index}
+                  // Montar função de callBack
+                  identifier={this.state.destinatioMarker}
+                  anchor={{x: 0.5, y: 0.4}}
+                  coordinate={{
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                  }}
+                  onCalloutPress={() => {
+                    this.setState({
+                      prestadorItemSelecionado: item,
+                    });
+                  }}>
+                  <View style={styles.markerView}>
+                    <Text style={styles.nomeMarker}>{item.nome}</Text>
+                    <Image
+                      onLayout={() => this.setState({initialRender: false})}
+                      source={{
+                        uri: item.profileImage,
+                      }}
+                      style={styles.imgMarker}
+                    />
+                    <Text style={styles.nomeProfissao}>
+                      {item.nomeProfissao}
+                    </Text>
+                  </View>
 
-                    <Callout
-                      onPress={() => this.setState({modalVisible: true})}>
-                      <Text>
-                        Clique aqui para saber maiores informações de
-                        contratação ou caso queira conversar com o prestador
-                      </Text>
-                      <CalloutModal
-                        infos={infos}
-                        contratarPrestador={this.contratarPrestador}
-                        objeto={this}
-                        uid={this.props.userUid}
-                        uidProvider={infos.id}
-                      />
-                    </Callout>
-                  </Marker>
-                );
-              }
+                  <Callout onPress={() => this.setState({modalVisible: true})}>
+                    <Text>
+                      Clique aqui para saber maiores informações de contratação
+                      ou caso queira conversar com o prestador
+                    </Text>
+                    <CalloutModal
+                      infos={item}
+                      contratarPrestador={this.contratarPrestador}
+                      objeto={this}
+                    />
+                  </Callout>
+                </Marker>
+              );
             })}
 
-          {/* Para implementação futura das rotas entre usuários e prestador
+          {this.state.destination.latitude != 0 && (
+            <MapViewDirections
+              apikey={'AIzaSyB6aXSct_CrkhPBGrry-v_BWjtqvk3Bjas'}
+              origin={this.state.currentLocation}
+              destination={this.state.destination}
+              strokeColor={'#1f33c9'}
+              strokeWidth={6}
+            />
+          )}
 
-            Não o implementei para o TCC pois está gerando um aviso de que o JSON
-            passado para a função que está errado,
-            preciso investigar melhor com mais tempo
+          <Marker
+            pinColor="blue"
+            identifier={'DestinationMarker'}
+            coordinate={{
+              latitude: this.state.currentLocation.latitude,
+              longitude: this.state.currentLocation.longitude,
+            }}
+          />
 
-            {this.state.destLocation.latitude != 0 && (
+          {this.props.render == true && (
             <MapViewDirections
               apikey={'AIzaSyB6aXSct_CrkhPBGrry-v_BWjtqvk3Bjas'}
               origin={this.state.currentLocation}
               destination={this.state.destLocation}
-            />
-          )}
-
-          */}
-
-          {this.state.currentLocation != null && (
-            <Marker
-              pinColor="blue"
-              identifier={'OriginMarker'}
-              coordinate={{
-                latitude: this.state.currentLocation.latitude,
-                longitude: this.state.currentLocation.longitude,
-              }}
+              strokeColor={'#fff'}
+              strokeWidth={4}
             />
           )}
         </MapView>
-
         <TouchableHighlight style={styles.recenterMap}>
           <FontAwesomeIcon
             size={40}
@@ -354,7 +361,6 @@ export class Home extends Component {
             onPress={() => this.realignMap()}
           />
         </TouchableHighlight>
-
         <Animated.View
           style={[styles.viewAviso, {height: this.state.warnHeight}]}>
           <Text style={styles.textoAviso}>{this.state.loadingMsg}</Text>
@@ -365,12 +371,14 @@ export class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  userUid: state.home.userUid,
+  uid: state.auth.uid,
+
+  render: state.home.render,
 });
 
 const HomeConnection = connect(
   mapStateToProps,
-  {getUid},
+  {setRender},
 )(Home);
 
 export default HomeConnection;

@@ -45,7 +45,7 @@ export class Login extends Component {
     };
   }
 
-  UNSAFE_componentWillUpdate() {
+  componentDidUpdate() {
     if (this.props.status == 1) {
       //Manda o user para a tela home
       this.props.navigation.dispatch(
@@ -223,6 +223,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     status: state.auth.status,
+
+    uid: state.auth.uid,
 
     errorGeralLogin: state.auth.errorGeralLogin,
 

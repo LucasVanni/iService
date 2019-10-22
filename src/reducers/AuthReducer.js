@@ -1,6 +1,8 @@
 const initialState = {
   status: 0, // 0 -> Não verificado, 1 -> Logado, 2 -> Não logado.
 
+  uid: null,
+
   errorGeral: null,
 
   emailBorderColorForgot: '#fff',
@@ -44,6 +46,13 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, status: action.payload.status};
   }
 
+  if (action.type == 'changeUid') {
+    return {
+      ...state,
+      status: 1,
+      uid: action.payload.uid,
+    };
+  }
   if (action.type == 'setEmailField') {
     let re = /[a-z0-9!#$%&'*+\/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9][a-z0-9-]*[a-z0-9]/;
 

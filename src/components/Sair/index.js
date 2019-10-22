@@ -24,9 +24,11 @@ const logout = objeto => {
   objeto.props.navigation.dispatch(
     StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({routeName: 'Preload'})],
+      actions: [NavigationActions.navigate({routeName: 'Login'})],
     }),
   );
+
+  window.globalNavigator.navigate('Principal');
 };
 
 const SairConnect = connect(

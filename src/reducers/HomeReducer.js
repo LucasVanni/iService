@@ -2,7 +2,7 @@ const initialState = {
   profileUrlImage: null,
   name: null,
   profileImages: null,
-  userUid: null,
+  render: false,
 };
 
 const HomeReducer = (state = initialState, action) => {
@@ -18,8 +18,8 @@ const HomeReducer = (state = initialState, action) => {
     return {...state, profileImages: action.payload.profileImages};
   }
 
-  if (action.type == 'setUdi') {
-    return {...state, userUid: action.payload.userUid};
+  if (action.type == 'setRender') {
+    return {...state, render: action.payload.render};
   }
 
   return state;

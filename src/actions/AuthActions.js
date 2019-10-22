@@ -20,9 +20,9 @@ export const checkLogin = () => {
     verifyLogin()
       .then(resolveProps => {
         dispatch({
-          type: 'changeStatus',
+          type: 'changeUid',
           payload: {
-            status: resolveProps,
+            uid: resolveProps.uid,
           },
         });
       })
@@ -30,7 +30,7 @@ export const checkLogin = () => {
         dispatch({
           type: 'changeStatus',
           payload: {
-            status: rejectProps,
+            status: rejectProps.status,
           },
         });
       });
@@ -458,9 +458,9 @@ export const providerSignUp = (objeto, callback) => {
           callback();
 
           dispatch({
-            type: 'changeStatus',
+            type: 'changeUid',
             payload: {
-              status: resolveProps.status,
+              uid: resolveProps.uid,
             },
           });
         })
@@ -575,13 +575,13 @@ export const userSignUp = (objeto, callback) => {
     if (cadastro === true) {
       makeUserSignUp(objeto, callback)
         .then(resolveProps => {
-          callback();
           dispatch({
-            type: 'changeStatus',
+            type: 'changeUid',
             payload: {
-              status: resolveProps.status,
+              uid: resolveProps.uid,
             },
           });
+          callback();
         })
         .catch(rejectProps => {
           switch (rejectProps.error.code) {
@@ -620,23 +620,22 @@ export const userSignUp = (objeto, callback) => {
 
 export const SignOut = () => {
   return dispatch => {
-    makeSignOut()
-      .then(status => {
-        dispatch({
+    makeSignOut().then(resolveProps => {
+      dispatch(
+        {
           type: 'changeStatus',
           payload: {
-            status,
+            status: resolveProps,
           },
-        });
-      })
-      .catch(status => {
-        dispatch({
-          type: 'changeStatus',
+        },
+        {
+          type: 'changeUid',
           payload: {
-            status,
+            uid: null,
           },
-        });
-      });
+        },
+      );
+    });
   };
 };
 
@@ -644,16 +643,15 @@ export const doLogin = (objeto, callback) => {
   return dispatch => {
     makeLogin(objeto)
       .then(resolveProps => {
+        callback();
         dispatch({
-          type: 'changeStatus',
+          type: 'changeUid',
           payload: {
-            status: resolveProps.status,
+            uid: resolveProps.uid,
           },
         });
-        callback();
       })
       .catch(rejectProps => {
-        console.log(rejectProps);
         switch (rejectProps.error.code) {
           case 'auth/user-disabled':
             objeto.props.setErrorGeralLogin('Seu usuário está desativado');

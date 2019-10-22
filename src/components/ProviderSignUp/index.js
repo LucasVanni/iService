@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import {StackActions, NavigationActions} from 'react-navigation';
+
 import {connect} from 'react-redux';
 
 import {Avatar} from 'react-native-elements';
@@ -54,6 +56,18 @@ export class ProviderSignUp extends Component {
 
     this.addImg = this.addImg.bind(this);
     this.props.getListaProfissoes();
+  }
+
+  UNSAFE_componentWillUpdate() {
+    if (this.props.status == 1) {
+      //Manda o user para a tela home
+      this.props.navigation.dispatch(
+        StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({routeName: 'HomeDrawer'})],
+        }),
+      );
+    }
   }
 
   addImg() {
@@ -362,6 +376,8 @@ const styles = StyleSheet.create({
 
 const mapStatetoProps = state => {
   return {
+    status: state.auth.status,
+
     errorGeral: state.auth.errorGeral,
 
     avatar: state.auth.avatar,

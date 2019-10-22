@@ -16,12 +16,16 @@ class Preload extends Component {
   constructor(props) {
     super(props);
 
+    this.props.checkLogin();
+
+    window.globalNavigator = this.props.navigation;
+
     this.verifyStatus = this.verifyStatus.bind(this);
   }
 
   componentDidMount() {
     // Faz verificação e modifica o status
-    this.props.checkLogin();
+    this.verifyStatus();
   }
 
   componentDidUpdate() {
@@ -73,7 +77,7 @@ class Preload extends Component {
 }
 
 const mapStateToProps = state => {
-  return {status: state.auth.status};
+  return {status: state.auth.status, uid: state.auth.uid};
 };
 
 const PreloadConnect = connect(

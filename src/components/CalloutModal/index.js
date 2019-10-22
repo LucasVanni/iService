@@ -7,22 +7,29 @@ export default class CalloutModal extends Component {
     this.state = {
       modalVisible: this.props.objeto.state.modalVisible,
     };
-    this.criarConversa = this.criarConversa.bind(this);
+    // this.criarConversa = this.criarConversa.bind(this);
     this.clickContratarPrestador = this.clickContratarPrestador.bind(this);
+    this.doSearch = this.doSearch.bind(this);
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
 
-  criarConversa(objeto, uid, prestadorUid) {
-    objeto.props.criarConversa(uid, prestadorUid);
-    objeto.props.navigation.navigate('QuartaRota');
-    objeto.setState({modalVisible: false});
-  }
+  // criarConversa(objeto, uid, prestadorUid) {
+  //   objeto.props.criarConversa(uid, prestadorUid);
+  //   objeto.props.navigation.navigate('QuartaRota');
+  //   objeto.setState({modalVisible: false});
+  // }
 
   clickContratarPrestador() {
-    this.props.contratarPrestador(this.props.infos);
+    this.props.contratarPrestador(
+      this.props.objeto.state.prestadorItemSelecionado,
+    );
+  }
+
+  doSearch() {
+    makeSearchLocations(this.props.infos.id).then(results => {});
   }
 
   render() {
@@ -45,7 +52,7 @@ export default class CalloutModal extends Component {
         }}>
         <View style={viewDentroDoModal}>
           <View style={viewTextoAviso}>
-            <TouchableHighlight
+            {/* <TouchableHighlight
               underlayColor={'#1f33c9'}
               style={toConversar}
               onPress={() =>
@@ -56,11 +63,13 @@ export default class CalloutModal extends Component {
                 )
               }>
               <Text style={textConversar}>Conversar com prestador</Text>
-            </TouchableHighlight>
+            </TouchableHighlight> */}
             <TouchableHighlight
               underlayColor={'#1f33c9'}
               style={toConversar}
-              onPress={() => this.clickContratarPrestador()}>
+              onPress={() => {
+                this.clickContratarPrestador();
+              }}>
               <Text style={textConversar}>Contratar prestador</Text>
             </TouchableHighlight>
             <TouchableHighlight

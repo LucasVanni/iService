@@ -14,6 +14,8 @@ import {Avatar} from 'react-native-elements';
 
 import ImagePicker from 'react-native-image-picker';
 
+import {StackActions, NavigationActions} from 'react-navigation';
+
 import {
   setErrorGeral,
   setUriAvatar,
@@ -47,6 +49,18 @@ export class UserSignUp extends Component {
     };
 
     this.addImg = this.addImg.bind(this);
+  }
+
+  componentDidUpdate() {
+    if (this.props.status == 1) {
+      //Manda o user para a tela home
+      this.props.navigation.dispatch(
+        StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({routeName: 'HomeDrawer'})],
+        }),
+      );
+    }
   }
 
   addImg() {
@@ -313,6 +327,10 @@ const styles = StyleSheet.create({
 
 const mapStatetoProps = state => {
   return {
+    status: state.auth.status,
+
+    uid: state.auth.uid,
+
     errorGeral: state.auth.errorGeral,
 
     avatar: state.auth.avatar,

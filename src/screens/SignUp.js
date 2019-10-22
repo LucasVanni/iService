@@ -3,8 +3,6 @@ import {View, Text, StyleSheet, StatusBar} from 'react-native';
 
 import {connect} from 'react-redux';
 
-import {setEmailField} from '../actions/AuthActions';
-
 import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
 
 import UserSignUp from '../components/UserSignUp';
@@ -39,9 +37,9 @@ export class SignUp extends Component {
           <View style={styles.intersectionSignUp}>
             {this.state.checkedTomador == true &&
             this.state.checkedPrestador == false ? (
-              <UserSignUp />
+              <UserSignUp navigation={this.props.navigation} />
             ) : (
-              <ProviderSignUp />
+              <ProviderSignUp navigation={this.props.navigation} />
             )}
           </View>
         </View>
@@ -77,8 +75,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    status: state.auth.status,
+  };
 };
 
 const SignUpConnect = connect(mapStateToProps)(SignUp);
