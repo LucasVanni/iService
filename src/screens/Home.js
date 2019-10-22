@@ -244,7 +244,6 @@ export class Home extends Component {
           style={styles.mapView}
           customMapStyle={mapStyle}
           provider={PROVIDER_GOOGLE}
-          showsUserLocation
           initialRegion={this.state.currentLocation}
           onMapReady={() => this.getCurrentLocation()}
           followsUserLocation
@@ -272,13 +271,20 @@ export class Home extends Component {
               });
             });
           }}>
+          <Marker
+            pinColor="blue"
+            identifier={'OriginMarker'}
+            coordinate={{
+              latitude: this.state.currentLocation.latitude,
+              longitude: this.state.currentLocation.longitude,
+            }}
+          />
+
           {this.state.providerLocation != [] &&
             this.state.providerLocation.map((item, index) => {
               return (
                 <Marker
                   key={index}
-                  // Montar função de callBack
-                  identifier={this.state.destinatioMarker}
                   anchor={{x: 0.5, y: 0.4}}
                   coordinate={{
                     latitude: item.latitude,
@@ -319,31 +325,20 @@ export class Home extends Component {
             })}
 
           {this.state.destination.latitude != 0 && (
-            <MapViewDirections
-              apikey={'AIzaSyB6aXSct_CrkhPBGrry-v_BWjtqvk3Bjas'}
-              origin={this.state.currentLocation}
-              destination={this.state.destination}
-              strokeColor={'#1f33c9'}
-              strokeWidth={6}
+            <Marker
+              pinColor="#1f33c9"
+              identifier="DestinationMarker"
+              coordinate={this.state.destination}
             />
           )}
 
-          <Marker
-            pinColor="blue"
-            identifier={'DestinationMarker'}
-            coordinate={{
-              latitude: this.state.currentLocation.latitude,
-              longitude: this.state.currentLocation.longitude,
-            }}
-          />
-
-          {this.props.render == true && (
+          {this.state.destination.latitude != 0 && (
             <MapViewDirections
-              apikey={'AIzaSyB6aXSct_CrkhPBGrry-v_BWjtqvk3Bjas'}
               origin={this.state.currentLocation}
-              destination={this.state.destLocation}
-              strokeColor={'#fff'}
+              destination={this.state.destination}
+              apikey={'AIzaSyB6aXSct_CrkhPBGrry-v_BWjtqvk3Bjas'}
               strokeWidth={4}
+              strokeColor={'#fff'}
             />
           )}
         </MapView>
