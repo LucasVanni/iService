@@ -9,7 +9,6 @@ import {
   StyleSheet,
   Animated,
   Platform,
-  Permission,
   PermissionsAndroid,
   TouchableHighlight,
   StatusBar,
@@ -28,6 +27,8 @@ import Geolocation from 'react-native-geolocation-service';
 import MapViewDirections from 'react-native-maps-directions';
 
 import {setRender} from '../actions/HomeAction';
+
+import {criarConversa} from '../actions/ChatActions';
 
 import {
   getPosition,
@@ -318,6 +319,7 @@ export class Home extends Component {
                       infos={item}
                       contratarPrestador={this.contratarPrestador}
                       objeto={this}
+                      uid={this.props.uid}
                     />
                   </Callout>
                 </Marker>
@@ -334,12 +336,28 @@ export class Home extends Component {
 
           {this.state.destination.latitude != 0 && (
             <MapViewDirections
-              origin={this.state.currentLocation}
+              origin={{
+                latitude: this.state.currentLocation.latitude,
+                longitude: this.state.currentLocation.longitude,
+              }}
               destination={this.state.destination}
               apikey={'AIzaSyB6aXSct_CrkhPBGrry-v_BWjtqvk3Bjas'}
               strokeWidth={4}
               strokeColor={'#fff'}
             />
+
+            // <Polyline
+            //   coordinates={[
+            //     {
+            //       latitude: this.state.currentLocation.latitude,
+            //       longitude: this.state.currentLocation.longitude,
+            //     },
+            //     this.state.destination,
+            //   ]}
+            //   strokeColor="#fff"
+            //   strokeWidth={6}
+            //   geodesic={false}
+            // />
           )}
         </MapView>
         <TouchableHighlight style={styles.recenterMap}>
@@ -367,13 +385,12 @@ export class Home extends Component {
 
 const mapStateToProps = state => ({
   uid: state.auth.uid,
-
   render: state.home.render,
 });
 
 const HomeConnection = connect(
   mapStateToProps,
-  {setRender},
+  {setRender, criarConversa},
 )(Home);
 
 export default HomeConnection;

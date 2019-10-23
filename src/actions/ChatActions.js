@@ -210,10 +210,8 @@ export const enviarMensagem = (
   };
 };
 
-export const getPrestadores = () => {
+export const getPrestadores = uid => {
   return dispatch => {
-    let usuarioId = firebase.auth().currentUser.uid;
-
     firebase
       .database()
       .ref('usuarios')
@@ -221,10 +219,7 @@ export const getPrestadores = () => {
       .on('value', snapshot => {
         let prestadores = [];
         snapshot.forEach(childItem => {
-          if (
-            childItem.val().type == 'User/Provider' &&
-            usuarioId != childItem.key
-          ) {
+          if (childItem.val().type == 'User/Provider' && uid != childItem.key) {
             prestadores.push({
               key: childItem.key,
               nome: childItem.val().nome,

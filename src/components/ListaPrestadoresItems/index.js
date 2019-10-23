@@ -63,7 +63,7 @@ class ListaPrestadoresItems extends Component {
               </TouchableHighlight>
             </View>
             <View>
-              <Text>Métodos de pagamento</Text>
+              <Text>Deseja conversar com {this.props.data.nome}?</Text>
             </View>
             <View style={viewBotaoAdicionar}>
               <TouchableHighlight
@@ -71,7 +71,7 @@ class ListaPrestadoresItems extends Component {
                 underlayColor={'#1f33c9'}
                 onPress={() => {
                   this.props.onPress(this.props.data);
-                  this.props.objeto.props.navigation.navigate('QuartaRota');
+                  this.props.objeto.props.navigation.navigate('Fourth');
                   setVisible(this, false);
                 }}>
                 <Text style={txtBtnAdicionar}>Conversar com prestador</Text>

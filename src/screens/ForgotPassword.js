@@ -25,6 +25,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 
+import LoadingItem from '../components/LoadingItem';
+
 export class ForgotPassword extends Component {
   static navigationOptions = {
     header: null,
@@ -94,6 +96,8 @@ export class ForgotPassword extends Component {
                 onPress={() => sendEmailAction(this)}
               />
             </TouchableHighlight>
+
+            <LoadingItem visible={this.state.loading} />
           </KeyboardAvoidingView>
         </View>
       </AnimatedLinearGradient>

@@ -7,7 +7,7 @@ export default class CalloutModal extends Component {
     this.state = {
       modalVisible: this.props.objeto.state.modalVisible,
     };
-    // this.criarConversa = this.criarConversa.bind(this);
+    this.criarConversa = this.criarConversa.bind(this);
     this.clickContratarPrestador = this.clickContratarPrestador.bind(this);
     this.doSearch = this.doSearch.bind(this);
   }
@@ -16,11 +16,11 @@ export default class CalloutModal extends Component {
     this.setState({modalVisible: visible});
   }
 
-  // criarConversa(objeto, uid, prestadorUid) {
-  //   objeto.props.criarConversa(uid, prestadorUid);
-  //   objeto.props.navigation.navigate('QuartaRota');
-  //   objeto.setState({modalVisible: false});
-  // }
+  criarConversa(objeto, uid, prestadorUid) {
+    objeto.props.criarConversa(uid, prestadorUid);
+    objeto.props.navigation.navigate('Fourth');
+    objeto.setState({modalVisible: false});
+  }
 
   clickContratarPrestador() {
     this.props.contratarPrestador(
@@ -52,18 +52,18 @@ export default class CalloutModal extends Component {
         }}>
         <View style={viewDentroDoModal}>
           <View style={viewTextoAviso}>
-            {/* <TouchableHighlight
+            <TouchableHighlight
               underlayColor={'#1f33c9'}
               style={toConversar}
               onPress={() =>
                 this.criarConversa(
                   this.props.objeto,
                   this.props.uid,
-                  this.props.uidProvider,
+                  this.props.infos.id,
                 )
               }>
               <Text style={textConversar}>Conversar com prestador</Text>
-            </TouchableHighlight> */}
+            </TouchableHighlight>
             <TouchableHighlight
               underlayColor={'#1f33c9'}
               style={toConversar}

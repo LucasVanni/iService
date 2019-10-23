@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 
 import {getUserData} from '../../actions/HomeAction';
 
+import {getPrestadores} from '../../actions/ChatActions';
+
 export class CustomSidebarMenu extends Component {
   constructor() {
     super();
@@ -45,6 +47,7 @@ export class CustomSidebarMenu extends Component {
   };
 
   UNSAFE_componentWillMount() {
+    this.props.getPrestadores(this.props.uid);
     this.props.getUserData(this.props.uid);
     global.currentScreenIndex = 0;
   }
@@ -145,7 +148,7 @@ const mapStateToProps = state => {
 
 const CustomSidebarMenuConnect = connect(
   mapStateToProps,
-  {getUserData},
+  {getUserData, getPrestadores},
 )(CustomSidebarMenu);
 
 export default CustomSidebarMenuConnect;

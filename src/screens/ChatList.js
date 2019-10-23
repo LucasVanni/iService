@@ -12,33 +12,24 @@ import {connect} from 'react-redux';
 import ListaPrestadoresItems from '../components/ListaPrestadoresItems/';
 
 export class ChatList extends Component {
-  static navigationOptions = {
-    title: 'Prestadores disponíveis',
-  };
-
   async UNSAFE_componentWillMount() {
-    await getPrestadores();
+    await getPrestadores(this.props.uid);
   }
 
   render() {
-    const {view, flatListStyle} = styles;
+    const {view} = styles;
     return (
       <View style={view}>
-        <Text style={{textAlign: 'center'}}>
-          LISTA DE PRESTADORES DISPONÍVEIS
-        </Text>
-        <View style={flatListStyle}>
-          <FlatList
-            data={this.props.prestadores}
-            renderItem={({item}) => (
-              <ListaPrestadoresItems
-                objeto={this}
-                data={item}
-                onPress={items => prestadorClick(this, items)}
-              />
-            )}
-          />
-        </View>
+        <FlatList
+          data={this.props.prestadores}
+          renderItem={({item}) => (
+            <ListaPrestadoresItems
+              objeto={this}
+              data={item}
+              onPress={items => prestadorClick(this, items)}
+            />
+          )}
+        />
       </View>
     );
   }
@@ -62,6 +53,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
+    uid: state.auth.uid,
     prestadores: state.chat.prestadores,
     conversas: state.chat.conversas,
     chatAtivo: state.chat.chatAtivo,

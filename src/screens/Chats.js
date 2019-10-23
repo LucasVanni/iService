@@ -27,7 +27,7 @@ export class Chats extends Component {
 
   componentDidUpdate() {
     if (this.props.chatAtivo !== '') {
-      this.props.navigation.navigate('Conversa', {
+      this.props.navigation.navigate('Fifty', {
         titulo: this.props.tituloChatAtivo,
       });
     }

@@ -62,29 +62,37 @@ const FirstStack = createStackNavigator({
 const FourthStack = createStackNavigator({
   Fourth: {
     screen: Chats,
-    navigationOptions: {
-      header: null,
-    },
   },
   Fifty: {
     screen: Chat,
-    navigationOptions: {
-      header: null,
-    },
   },
 });
 
+const FiftyStatck = createStackNavigator(
+  {
+    Sixty: {
+      screen: ChatList,
+      navigationOptions: ({navigation}) => ({
+        title: 'Lista de prestadores',
+        headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+
+        headerStyle: {
+          backgroundColor: '#1f33c9',
+        },
+        headerTintColor: '#fff',
+      }),
+    },
+  },
+  {
+    headerLayoutPreset: 'center',
+  },
+);
+
 const SecondStack = createBottomTabNavigator({
   Second: {
-    screen: ChatList,
+    screen: FiftyStatck,
     navigationOptions: ({navigation}) => ({
-      title: 'Lista de prestadores',
-      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
-
-      headerStyle: {
-        backgroundColor: '#1f33c9',
-      },
-      headerTintColor: '#fff',
+      title: 'Prestadores disponíveis',
     }),
   },
   FourthStack: {

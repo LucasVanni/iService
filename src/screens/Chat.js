@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {
   View,
   FlatList,
@@ -11,6 +12,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
+
 import {connect} from 'react-redux';
 
 import Permissions from 'react-native-permissions';
@@ -71,17 +73,17 @@ export class Chat extends Component {
   });
 
   checkPermission = async () => {
-    const p = await Permissions.check('microphone');
+    const p = await Permissions.check('android.permission.RECORD_AUDIO');
 
     console.log('permission check', p);
 
-    if (p === 'authorized') return;
+    if (p === 'granted') return;
 
     return this.requestPermission();
   };
 
   requestPermission = async () => {
-    const p = await Permissions.request('microphone');
+    const p = await Permissions.request('android.permission.RECORD_AUDIO');
 
     console.log('permission request', p);
   };
@@ -131,7 +133,6 @@ export class Chat extends Component {
       progressBar,
       progressBarView,
       textPCT,
-      modalView,
     } = styles;
 
     let AreaBehavior = Platform.select({ios: 'padding', android: null});

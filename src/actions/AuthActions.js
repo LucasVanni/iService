@@ -102,6 +102,12 @@ export const doSendEmail = objeto => {
             objeto.props.setErrorForgotPass('Usuário não encontrado');
             objeto.props.setEmailBorderColorForgot('#f00');
             break;
+          case 'auth/too-many-requests':
+            objeto.props.setErrorForgotPass(
+              'Se tentou mais de duas vezes redefinir a senha com o mesmo e-mail, tente novamente mais tarde',
+            );
+            objeto.props.setEmailBorderColorForgot('#f00');
+            break;
           default:
             alert(rejectProps.error.code);
             break;
