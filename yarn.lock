@@ -5807,10 +5807,10 @@ react-native-animated-linear-gradient@^1.2.0:
     prop-types "^15.6.0"
     rgb2hex "^0.1.0"
 
-react-native-audio-record@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-audio-record/-/react-native-audio-record-0.2.1.tgz#83f278444c5f4aa51b9704277bb265fc69560b7a"
-  integrity sha512-F4j6Wqc3UiRv3gfz9R+Lzt2ZjKjrCO34gkqRfq36RzzogZn+jusoHSFUozy4Qu5m5yg6pBWDbdesLIVpcJe5+Q==
+react-native-audio-record@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-audio-record/-/react-native-audio-record-0.2.2.tgz#9cbb0ddd3cbdd18f5edfabae812c0bc9c680e928"
+  integrity sha512-+JEY3AWz21xylePbXZ81DLHcqU5oJYztn3Uel3ay53P3ZrvJlwfmOmyOuoavA9boPV1O0dLLQIu9gC7xbKwNvQ==
 
 react-native-elements@^1.2.6:
   version "1.2.6"
@@ -5866,10 +5866,10 @@ react-native-maps@^0.26.1:
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.26.1.tgz#6ec316259b38d259c8974448d894bd7a23101da4"
   integrity sha512-p4VTB8YB5ZmOmDRCUpoHZkm05amZwhIo04AJMBbB9+JAR2PNNfpo0vceoWX0Mag4wnePkdzPomeWMplr/wimTg==
 
-react-native-permissions@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.0.2.tgz#1b3e3e936a6333ef58f9418b57985ca148f6462b"
-  integrity sha512-Lo32wSGfG6WXhxYl0XqZmiTdfX88j4mROOGOw60brLM9jFJMxJg3TDM8vBbm4LJnpYrVN2JtNw6baqv0vUaIeA==
+react-native-permissions@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.0.3.tgz#b6da83e5e313e41ba5f70ff2c4567291766b0140"
+  integrity sha512-8pd+UhyphAiFGzBil5d5pDxRf/rH+20SzDNu9cFnCtoD2MbYTVH7GjXsxaZ2lPsmwrqYYbF8FBfwmncKf/G1+Q==
 
 react-native-ratings@^6.3.0:
   version "6.5.0"
@@ -5979,10 +5979,10 @@ react-navigation-drawer@^2.2.2:
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.2.2.tgz#f77431e8dcf46e3f69aa201bb7c37979d2df03c9"
   integrity sha512-KcFH7RRzT1XuREkTbNMCqfy7nK7yenzpGKvqp1dTvAE+DIyHHpf+Po959lsmITlt/njQBn+QxvdX1FZ9we3lNA==
 
-react-navigation-stack@^1.9.4:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.9.4.tgz#9de7537bb83a1d30a177957bc7932b9447f4c409"
-  integrity sha512-0Iv8t99RPsznXVadlHGRwOJqLzJmj96PfWiwmZEhVnbNwMVXMLz3oOno0LL9tbiukQxEaFAKUIblElpd9izS6w==
+react-navigation-stack@^1.10.3:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.10.3.tgz#e714e442b20427f0d2d3c18fce1f9e8cfe69be0b"
+  integrity sha512-1gksFi/g/Lg9sBhgLlD0OiEB5xnatHb4C0eNMA5tli9cTVlhq375XNPIqOiTyftibBmjdApAsZFj5srUCoOu/w==
   dependencies:
     prop-types "^15.7.2"
 

@@ -248,6 +248,7 @@ export class Home extends Component {
           initialRegion={this.state.currentLocation}
           onMapReady={() => this.getCurrentLocation()}
           followsUserLocation
+          showsUserLocation
           onUserLocationChange={position => {
             setUpdateLocation(
               this,
@@ -272,14 +273,14 @@ export class Home extends Component {
               });
             });
           }}>
-          <Marker
+           <Marker
             pinColor="blue"
             identifier={'OriginMarker'}
             coordinate={{
               latitude: this.state.currentLocation.latitude,
               longitude: this.state.currentLocation.longitude,
             }}
-          />
+          /> 
 
           {this.state.providerLocation != [] &&
             this.state.providerLocation.map((item, index) => {

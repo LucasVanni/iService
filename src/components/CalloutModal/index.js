@@ -64,14 +64,14 @@ export default class CalloutModal extends Component {
               }>
               <Text style={textConversar}>Conversar com prestador</Text>
             </TouchableHighlight>
-            <TouchableHighlight
+            {/* <TouchableHighlight
               underlayColor={'#1f33c9'}
               style={toConversar}
               onPress={() => {
                 this.clickContratarPrestador();
               }}>
               <Text style={textConversar}>Contratar prestador</Text>
-            </TouchableHighlight>
+            </TouchableHighlight> */}
             <TouchableHighlight
               underlayColor={'#1f33c9'}
               style={toFecharModal}
