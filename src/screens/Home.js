@@ -273,14 +273,14 @@ export class Home extends Component {
               });
             });
           }}>
-           <Marker
+          <Marker
             pinColor="blue"
             identifier={'OriginMarker'}
             coordinate={{
               latitude: this.state.currentLocation.latitude,
               longitude: this.state.currentLocation.longitude,
             }}
-          /> 
+          />
 
           {this.state.providerLocation != [] &&
             this.state.providerLocation.map((item, index) => {
@@ -294,7 +294,7 @@ export class Home extends Component {
                   }}
                   onCalloutPress={() => {
                     this.setState({
-                      prestadorItemSelecionado: item,
+                      prestadorItemSelecionado: item.id,
                     });
                   }}>
                   <View style={styles.markerView}>
@@ -317,7 +317,6 @@ export class Home extends Component {
                       ou caso queira conversar com o prestador
                     </Text>
                     <CalloutModal
-                      infos={item}
                       contratarPrestador={this.contratarPrestador}
                       objeto={this}
                       uid={this.props.uid}

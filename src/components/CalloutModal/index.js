@@ -59,7 +59,7 @@ export default class CalloutModal extends Component {
                 this.criarConversa(
                   this.props.objeto,
                   this.props.uid,
-                  this.props.infos.id,
+                  this.props.objeto.state.prestadorItemSelecionado,
                 )
               }>
               <Text style={textConversar}>Conversar com prestador</Text>

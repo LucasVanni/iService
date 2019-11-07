@@ -76,7 +76,7 @@ export class AdicionarProfissao extends Component {
                 onChangeText={profissao =>
                   this.props.editTextAdicionarProfissao(profissao)
                 }
-                placeholder="Digite sua profissão exercida..."
+                placeholder="Digite a profissão exercida..."
                 placeholderTextColor={'#1f33c9'}
                 underlineColorAndroid="transparent"
               />
