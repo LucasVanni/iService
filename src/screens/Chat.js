@@ -75,8 +75,6 @@ export class Chat extends Component {
   checkPermission = async () => {
     const p = await Permissions.check('android.permission.RECORD_AUDIO');
 
-    console.log('permission check', p);
-
     if (p === 'granted') return;
 
     return this.requestPermission();
@@ -84,8 +82,6 @@ export class Chat extends Component {
 
   requestPermission = async () => {
     const p = await Permissions.request('android.permission.RECORD_AUDIO');
-
-    console.log('permission request', p);
   };
 
   async componentDidMount() {
