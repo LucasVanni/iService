@@ -35,8 +35,8 @@ export class SignUp extends Component {
           <CheckBox objeto={this} />
 
           <View style={styles.intersectionSignUp}>
-            {this.state.checkedTomador == true &&
-            this.state.checkedPrestador == false ? (
+            {this.state.checkedTomador === true &&
+            this.state.checkedPrestador === false ? (
               <UserSignUp navigation={this.props.navigation} />
             ) : (
               <ProviderSignUp navigation={this.props.navigation} />

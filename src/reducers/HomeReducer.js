@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const HomeReducer = (state = initialState, action) => {
-  if (action.type == 'setUserData') {
+  if (action.type === 'setUserData') {
     return {
       ...state,
       profileUrlImage: action.payload.profileUrlImage,
@@ -14,11 +14,11 @@ const HomeReducer = (state = initialState, action) => {
     };
   }
 
-  if (action.type == 'setProfileImages') {
+  if (action.type === 'setProfileImages') {
     return {...state, profileImages: action.payload.profileImages};
   }
 
-  if (action.type == 'setRender') {
+  if (action.type === 'setRender') {
     return {...state, render: action.payload.render};
   }
 

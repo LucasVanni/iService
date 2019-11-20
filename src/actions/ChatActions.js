@@ -45,7 +45,7 @@ export const criarConversa = (usuarioUid, prestadorUid) => {
             .database()
             .ref('usuarios')
             .child(prestadorUid)
-            .on('value', snapshot => {
+            .on('value', snap => {
               firebase
                 .database()
                 .ref('usuarios')
@@ -54,8 +54,8 @@ export const criarConversa = (usuarioUid, prestadorUid) => {
                 .child(conversaId)
                 .set({
                   id: conversaId,
-                  nome: snapshot.val().nome,
-                  nomeProfissao: snapshot.val().nomeProfissao,
+                  nome: snap.val().nome,
+                  nomeProfissao: snap.val().nomeProfissao,
                   outroUsuario: prestadorUid,
                 });
             });
@@ -64,7 +64,7 @@ export const criarConversa = (usuarioUid, prestadorUid) => {
             .database()
             .ref('usuarios')
             .child(usuarioUid)
-            .on('value', snapshot => {
+            .on('value', snap => {
               firebase
                 .database()
                 .ref('usuarios')
@@ -73,7 +73,8 @@ export const criarConversa = (usuarioUid, prestadorUid) => {
                 .child(conversaId)
                 .set({
                   id: conversaId,
-                  nome: snapshot.val().nome,
+                  nome: snap.val().nome,
+                  nomeProfissao: snap.val().nomeProfissao,
                   outroUsuario: usuarioUid,
                 })
                 .then(() => {
@@ -124,7 +125,7 @@ export const enviarImagem = (blob, progressCallback, successCallback) => {
       'state_changed',
       progressCallback,
       error => {
-        alert(error.code);
+        console.log(error.code);
       },
       () => {
         img.getDownloadURL().then(url => {
@@ -150,7 +151,7 @@ export const enviarAudio = (blob, progressCallback, successCallback) => {
     audio.put(blob, {contentType: 'application/mp4'}).on(
       'state_changed',
       progressCallback,
-      error => alert(error.code),
+      error => console.log(error.code),
       () => {
         audio.getDownloadURL().then(url => {
           successCallback(url);
@@ -219,7 +220,10 @@ export const getPrestadores = uid => {
       .on('value', snapshot => {
         let prestadores = [];
         snapshot.forEach(childItem => {
-          if (childItem.val().type == 'User/Provider' && uid != childItem.key) {
+          if (
+            childItem.val().type === 'User/Provider' &&
+            uid !== childItem.key
+          ) {
             prestadores.push({
               key: childItem.key,
               nome: childItem.val().nome,
@@ -228,7 +232,7 @@ export const getPrestadores = uid => {
           }
         });
 
-        if (prestadores.length == 0) {
+        if (prestadores.length === 0) {
           prestadores.push({
             key: '0',
             nome: 'Não há registros de mais prestadores no momento',
@@ -259,8 +263,8 @@ export const getListaConversas = (usuarioId, callback) => {
           .ref('usuarios')
           .child(usuarioId)
           .child('conversas')
-          .on('value', snapshot => {
-            snapshot.forEach(childItem => {
+          .on('value', snap => {
+            snap.forEach(childItem => {
               conversas.push({
                 key: childItem.key,
                 nome: childItem.val().nome,

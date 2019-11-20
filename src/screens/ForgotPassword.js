@@ -42,7 +42,7 @@ export class ForgotPassword extends Component {
 
   render() {
     function sendEmailAction(objeto) {
-      if (objeto.props.emailValid == true) {
+      if (objeto.props.emailValid === true) {
         objeto.props.doSendEmail(objeto);
       }
 
@@ -51,7 +51,7 @@ export class ForgotPassword extends Component {
 
     let SignInButtonOpacity = 0.2;
 
-    if (this.props.emailValid == true) {
+    if (this.props.emailValid === true) {
       SignInButtonOpacity = 1;
     }
 

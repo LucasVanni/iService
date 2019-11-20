@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import {View, StyleSheet, Dimensions} from 'react-native';
 
-import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
@@ -27,7 +26,7 @@ class NavigationDrawerStructure extends Component {
   };
   render() {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.viewIcon}>
         <FontAwesomeIcon
           icon={faBars}
           size={40}
@@ -42,6 +41,9 @@ class NavigationDrawerStructure extends Component {
 const styles = StyleSheet.create({
   menuBar: {
     color: '#ff9e29',
+  },
+  viewIcon: {
+    flexDirection: 'row',
   },
 });
 
@@ -118,7 +120,7 @@ const ThirdStack = createStackNavigator({
   },
 });
 
-const HomeDrawer = createDrawerNavigator(
+export const HomeDrawer = createDrawerNavigator(
   {
     Home: {
       screen: FirstStack,
@@ -146,4 +148,3 @@ const HomeDrawer = createDrawerNavigator(
     drawerWidth: Dimensions.get('window').width - 130,
   },
 );
-export default createAppContainer(HomeDrawer);

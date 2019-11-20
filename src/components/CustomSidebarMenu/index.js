@@ -39,7 +39,7 @@ export class CustomSidebarMenu extends Component {
   }
 
   changeColor = key => {
-    if (global.currentScreenIndex == key) {
+    if (global.currentScreenIndex === key) {
       return '#1f33c9';
     } else {
       return 'black';
@@ -62,41 +62,34 @@ export class CustomSidebarMenu extends Component {
           style={styles.sideMenuProfileIcon}
         />
 
-        <View style={{paddingTop: 10}}>
-          <Text style={{color: '#1f33c9', fontSize: 17, fontWeight: 'bold'}}>
-            {this.props.name}
-          </Text>
+        <View style={styles.viewName}>
+          <Text style={styles.textName}>{this.props.name}</Text>
         </View>
 
         {/*Divider between Top Image and Sidebar Option*/}
-        <View
-          style={{
-            width: '100%',
-            height: 1,
-            backgroundColor: '#e2e2e2',
-            marginTop: 15,
-          }}
-        />
+        <View style={styles.container} />
         {/*Setting up Navigation Options from option array using loop*/}
-        <View style={{width: '100%'}}>
+        <View style={styles.mapView}>
           {this.items.map((item, key) => (
             <View
-              style={{
-                paddingTop: 10,
-                paddingBottom: 10,
-                backgroundColor:
-                  global.currentScreenIndex === key ? '#e0dbdb' : '#ffffff',
-              }}
+              style={[
+                styles.itemView,
+                // eslint-disable-next-line react-native/no-inline-styles
+                {
+                  backgroundColor:
+                    global.currentScreenIndex === key ? '#e0dbdb' : '#ffffff',
+                },
+              ]}
               key={key}>
               <TouchableHighlight
                 underlayColor={null}
-                style={{flexDirection: 'row', alignItems: 'center'}}
+                style={styles.button}
                 onPress={() => {
                   global.currentScreenIndex = key;
                   this.props.navigation.navigate(item.screenToNavigate);
                 }}>
                 <>
-                  <View style={{marginRight: 10, marginLeft: 20}}>
+                  <View style={styles.viewNavThump}>
                     <Icon
                       name={item.navOptionThumb}
                       size={25}
@@ -104,11 +97,16 @@ export class CustomSidebarMenu extends Component {
                     />
                   </View>
                   <Text
-                    style={{
-                      fontSize: 15,
-                      color:
-                        global.currentScreenIndex === key ? '#1f33c9' : 'black',
-                    }}>
+                    style={[
+                      styles.textButton,
+                      // eslint-disable-next-line react-native/no-inline-styles
+                      {
+                        color:
+                          global.currentScreenIndex === key
+                            ? '#1f33c9'
+                            : 'black',
+                      },
+                    ]}>
                     {item.navOptionName}
                   </Text>
                 </>
@@ -133,8 +131,39 @@ const styles = StyleSheet.create({
     height: 150,
     borderWidth: 4,
     borderColor: '#1f33c9',
-    //marginTop: 20,
     borderRadius: 150,
+  },
+  viewName: {
+    paddingTop: 10,
+  },
+  textName: {
+    color: '#1f33c9',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  container: {
+    width: '100%',
+    height: 1,
+    backgroundColor: '#e2e2e2',
+    marginTop: 15,
+  },
+  mapView: {
+    width: '100%',
+  },
+  itemView: {
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  viewNavThump: {
+    marginRight: 10,
+    marginLeft: 20,
+  },
+  textButton: {
+    fontSize: 15,
   },
 });
 
@@ -148,7 +177,10 @@ const mapStateToProps = state => {
 
 const CustomSidebarMenuConnect = connect(
   mapStateToProps,
-  {getUserData, getPrestadores},
+  {
+    getUserData,
+    getPrestadores,
+  },
 )(CustomSidebarMenu);
 
 export default CustomSidebarMenuConnect;

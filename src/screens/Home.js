@@ -142,7 +142,7 @@ export class Home extends Component {
         },
         error => {
           this.setWarning(false, '');
-          alert(`Erro na Loc: ${error.message}`);
+          console.log(`Erro na Loc: ${error.message}`);
         },
         {
           enableHighAccuracy: true,
@@ -157,7 +157,7 @@ export class Home extends Component {
   };
 
   requestLocationPermission = async () => {
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       try {
         const g = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -167,7 +167,7 @@ export class Home extends Component {
           },
         );
 
-        if (g == PermissionsAndroid.RESULTS.GRANTED) {
+        if (g === PermissionsAndroid.RESULTS.GRANTED) {
           return true;
         } else {
           return false;
@@ -181,7 +181,7 @@ export class Home extends Component {
   };
 
   setWarning(status, msg) {
-    if (status === true && msg != '') {
+    if (status === true && msg !== '') {
       this.setState({
         isLoading: status,
         loadingMsg: msg,
@@ -259,17 +259,17 @@ export class Home extends Component {
               getPosition(this.props.uid).then(resolveProps => {
                 this.setState({
                   providerLocation: resolveProps.providerLocation,
-                }),
-                  resolveProps.currentLocation.map(infos => {
-                    this.setState({
-                      currentLocation: {
-                        latitude: infos.latitude,
-                        latitudeDelta: infos.latitudeDelta,
-                        longitude: infos.longitude,
-                        longitudeDelta: infos.longitudeDelta,
-                      },
-                    });
+                });
+                resolveProps.currentLocation.map(infos => {
+                  this.setState({
+                    currentLocation: {
+                      latitude: infos.latitude,
+                      latitudeDelta: infos.latitudeDelta,
+                      longitude: infos.longitude,
+                      longitudeDelta: infos.longitudeDelta,
+                    },
                   });
+                });
               });
             });
           }}>
@@ -282,7 +282,7 @@ export class Home extends Component {
             }}
           />
 
-          {this.state.providerLocation != [] &&
+          {this.state.providerLocation !== [] &&
             this.state.providerLocation.map((item, index) => {
               return (
                 <Marker
@@ -326,7 +326,7 @@ export class Home extends Component {
               );
             })}
 
-          {this.state.destination.latitude != 0 && (
+          {this.state.destination.latitude !== 0 && (
             <Marker
               pinColor="#1f33c9"
               identifier="DestinationMarker"
@@ -334,7 +334,7 @@ export class Home extends Component {
             />
           )}
 
-          {this.state.destination.latitude != 0 && (
+          {this.state.destination.latitude !== 0 && (
             <MapViewDirections
               origin={{
                 latitude: this.state.currentLocation.latitude,
@@ -364,12 +364,7 @@ export class Home extends Component {
           <FontAwesomeIcon
             size={40}
             color="#fff"
-            style={{
-              backgroundColor: '#1f33c9',
-              borderColor: '#15bddb',
-              borderWidth: 4,
-              borderRadius: 20,
-            }}
+            style={styles.iconStyle}
             icon={faCrosshairs}
             onPress={() => this.realignMap()}
           />
@@ -436,6 +431,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 5,
     margin: 3,
+  },
+
+  iconStyle: {
+    backgroundColor: '#1f33c9',
+    borderColor: '#15bddb',
+    borderWidth: 4,
+    borderRadius: 20,
   },
 
   nomeProfissao: {

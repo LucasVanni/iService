@@ -11,7 +11,7 @@ import Preload from './screens/Preload';
 import Login from './screens/Login';
 import ForgotPassword from './screens/ForgotPassword';
 import SignUp from './screens/SignUp';
-import HomeDrawer from './screens/HomeDrawer';
+import {HomeDrawer} from './screens/HomeDrawer';
 
 // Criando as rotas iniciais de navegação
 

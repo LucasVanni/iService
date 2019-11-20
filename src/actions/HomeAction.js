@@ -1,4 +1,5 @@
 import {verifyUserData, setUid} from '../APIS/iServiceAPI';
+import firebase from '../APIS/iServiceAPI';
 
 export const getUserData = uid => {
   return dispatch => {
@@ -56,8 +57,8 @@ export const getPrestadores = usuarioId => {
         let prestadores = [];
         snapshot.forEach(childItem => {
           if (
-            childItem.val().type == 'User/Provider' &&
-            usuarioId != childItem.key
+            childItem.val().type === 'User/Provider' &&
+            usuarioId !== childItem.key
           ) {
             prestadores.push({
               key: childItem.key,
@@ -67,7 +68,7 @@ export const getPrestadores = usuarioId => {
           }
         });
 
-        if (prestadores.length == 0) {
+        if (prestadores.length === 0) {
           prestadores.push({
             key: '0',
             nome: 'Não há registros de mais prestadores no momento',

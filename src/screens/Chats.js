@@ -72,7 +72,10 @@ const mapStateToProps = state => {
 
 const ChatsConnection = connect(
   mapStateToProps,
-  {getListaConversas, setActiveChat},
+  {
+    getListaConversas,
+    setActiveChat,
+  },
 )(Chats);
 
 export default ChatsConnection;

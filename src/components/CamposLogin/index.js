@@ -24,7 +24,7 @@ export default class CamposLogin extends Component {
   render() {
     function hidden(objeto) {
       if (
-        objeto.state.hiddenImage ==
+        objeto.state.hiddenImage ===
         require('../../assets/images/passHidden.png')
       ) {
         objeto.setState({
@@ -54,7 +54,7 @@ export default class CamposLogin extends Component {
             onChangeText={text => this.props.actions(text)}
           />
 
-          {this.props.nomeCampo == 'SENHA' && (
+          {this.props.nomeCampo === 'SENHA' && (
             <TouchableHighlight
               style={styles.btnHidden}
               underlayColor={null}

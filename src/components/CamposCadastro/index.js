@@ -24,7 +24,7 @@ export default class CamposCadastro extends Component {
   render() {
     function hidden(objeto) {
       if (
-        objeto.state.hiddenImage ==
+        objeto.state.hiddenImage ===
         require('../../assets/images/passHidden.png')
       ) {
         objeto.setState({
@@ -56,7 +56,7 @@ export default class CamposCadastro extends Component {
             onChangeText={text => this.props.actions(text)}
           />
 
-          {this.props.nomeCampo == 'SENHA' && (
+          {this.props.nomeCampo === 'SENHA' && (
             <TouchableHighlight
               style={styles.btnHidden}
               underlayColor={null}
@@ -69,7 +69,7 @@ export default class CamposCadastro extends Component {
             </TouchableHighlight>
           )}
 
-          {this.props.nomeCampo == 'CONFIRMAR SENHA' && (
+          {this.props.nomeCampo === 'CONFIRMAR SENHA' && (
             <TouchableHighlight
               style={styles.btnHidden}
               underlayColor={null}

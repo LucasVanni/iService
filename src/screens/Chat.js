@@ -8,7 +8,6 @@ import {
   BackHandler,
   TextInput,
   Text,
-  Modal,
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -22,6 +21,11 @@ import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+const Fetch = RNFetchBlob.polyfill.Fetch;
+window.fetch = new Fetch({
+  auto: true,
+  binaryContentTypes: ['image/', 'video/', 'audio/', 'foo/'],
+}).build();
 
 import {
   setActiveChat,
@@ -75,13 +79,20 @@ export class Chat extends Component {
   checkPermission = async () => {
     const p = await Permissions.check('android.permission.RECORD_AUDIO');
 
-    if (p === 'granted') return;
+    if (p === 'granted') {
+      return;
+    }
 
     return this.requestPermission();
   };
 
   requestPermission = async () => {
     const p = await Permissions.request('android.permission.RECORD_AUDIO');
+    if (p === 'granted') {
+      return;
+    }
+
+    return this.requestPermission();
   };
 
   async componentDidMount() {
@@ -181,7 +192,7 @@ export class Chat extends Component {
   }
 }
 const exibirComponentes = (viewBotoesImagemVoz, botaoEnvio, objeto) => {
-  if (objeto.props.mensagem != '' && objeto.state.recording == false) {
+  if (objeto.props.mensagem !== '' && objeto.state.recording === false) {
     return (
       <TouchableHighlight
         style={botaoEnvio}
@@ -198,7 +209,7 @@ const exibirComponentes = (viewBotoesImagemVoz, botaoEnvio, objeto) => {
       </TouchableHighlight>
     );
   }
-  if (objeto.state.recording == false) {
+  if (objeto.state.recording === false) {
     return (
       <View style={viewBotoesImagemVoz}>
         <TouchableHighlight
@@ -240,7 +251,9 @@ const comecarGravacao = objeto => {
 };
 
 const pararGravacao = async objeto => {
-  if (!objeto.state.recording) return;
+  if (!objeto.state.recording) {
+    return;
+  }
 
   let audioFile = await AudioRecord.stop();
 

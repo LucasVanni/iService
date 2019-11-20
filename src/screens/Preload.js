@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StatusBar} from 'react-native';
+import {View, StatusBar, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {checkLogin} from '../actions/AuthActions';
 import {StackActions, NavigationActions} from 'react-navigation';
@@ -66,7 +66,7 @@ class Preload extends Component {
           customColors={['#15bddb', '#1f33c9']}
           points={{start: {x: 0.3, y: 0.3}, end: {x: 0.7, y: 0.7}}}
           speed={2000}>
-          <View style={{flex: 1}}>
+          <View style={styles.view}>
             <StatusBar backgroundColor="#1f33c9" barStyle="light-content" />
             <Logo />
           </View>
@@ -75,6 +75,10 @@ class Preload extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  view: {flex: 1},
+});
 
 const mapStateToProps = state => {
   return {status: state.auth.status, uid: state.auth.uid};

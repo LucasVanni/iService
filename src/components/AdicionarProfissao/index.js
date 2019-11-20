@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TextInput,
-  Modal,
   TouchableHighlight,
   StyleSheet,
 } from 'react-native';
@@ -38,6 +37,7 @@ export class AdicionarProfissao extends Component {
       textFecharModal,
       toFecharModal,
       viewFecharModal,
+      intraOverlay,
     } = styles;
 
     return (
@@ -54,7 +54,7 @@ export class AdicionarProfissao extends Component {
           isVisible={this.state.isVisible}
           overlayBackgroundColor="rgb(255,255,255)"
           borderRadius={20}
-          overlayStyle={{borderColor: '#ff9e29', borderWidth: 6}}
+          overlayStyle={intraOverlay}
           width="auto"
           onBackdropPress={() => setVisible(this, false)}
           height="auto">

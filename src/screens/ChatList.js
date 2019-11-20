@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, Text, Modal} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 
 import {
   getPrestadores,
@@ -62,7 +62,11 @@ const mapStateToProps = state => {
 
 const ChatListConnection = connect(
   mapStateToProps,
-  {criarConversa, setActiveChat, getPrestadores},
+  {
+    criarConversa,
+    setActiveChat,
+    getPrestadores,
+  },
 )(ChatList);
 
 export default ChatListConnection;

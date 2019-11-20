@@ -72,4 +72,8 @@ export const styles = StyleSheet.create({
     padding: 5,
     textAlign: 'center',
   },
+  intraOverlay: {
+    borderColor: '#ff9e29',
+    borderWidth: 6,
+  },
 });

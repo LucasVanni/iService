@@ -42,18 +42,18 @@ const initialState = {
 };
 
 const AuthReducer = (state = initialState, action) => {
-  if (action.type == 'changeStatus') {
+  if (action.type === 'changeStatus') {
     return {...state, status: action.payload.status};
   }
 
-  if (action.type == 'changeUid') {
+  if (action.type === 'changeUid') {
     return {
       ...state,
       status: 1,
       uid: action.payload.uid,
     };
   }
-  if (action.type == 'setEmailField') {
+  if (action.type === 'setEmailField') {
     let re = /[a-z0-9!#$%&'*+\/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9][a-z0-9-]*[a-z0-9]/;
 
     if (re.test(action.payload.email.toLowerCase())) {
@@ -78,12 +78,12 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, email: action.payload.email};
   }
 
-  if (action.type == 'setPasswordField') {
+  if (action.type === 'setPasswordField') {
     if (action.payload.pass.length < 6) {
       state.passValid = false;
       //state.passBorderColor = '#f00';
 
-      if (action.payload.pass == '') {
+      if (action.payload.pass === '') {
         state.passValid = false;
         state.passBorderColor = '#fff';
       }
@@ -106,12 +106,12 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, pass: action.payload.pass};
   }
 
-  if (action.type == 'setPasswordConfirmField') {
+  if (action.type === 'setPasswordConfirmField') {
     if (action.payload.passConfirm.length < 6) {
       state.passConfirmValid = false;
       //state.passBorderColor = '#f00';
 
-      if (action.payload.passConfirm == '') {
+      if (action.payload.passConfirm === '') {
         state.passConfirmValid = false;
         state.passConfirmBorderColor = '#fff';
       }
@@ -128,7 +128,7 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, passConfirm: action.payload.passConfirm};
   }
 
-  if (action.type == 'setUriAvatar') {
+  if (action.type === 'setUriAvatar') {
     // Em teste
     state.avatarBorderColor = '#fff';
     state.messageAvatarError = null;
@@ -136,15 +136,15 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, avatar: action.payload.uri};
   }
 
-  if (action.type == 'setErrorAvatar') {
+  if (action.type === 'setErrorAvatar') {
     return {...state, messageAvatarError: action.payload.messageAvatarError};
   }
 
-  if (action.type == 'setCorErrorAvatar') {
+  if (action.type === 'setCorErrorAvatar') {
     return {...state, avatarBorderColor: action.payload.avatarBorderColor};
   }
 
-  if (action.type == 'setNameField') {
+  if (action.type === 'setNameField') {
     // Incompleto
     state.nameBorderColor = '#fff';
     state.errorName = null;
@@ -152,11 +152,11 @@ const AuthReducer = (state = initialState, action) => {
     return {...state, name: action.payload.name};
   }
 
-  if (action.type == 'setErroName') {
+  if (action.type === 'setErroName') {
     return {...state, errorName: action.payload.errorName};
   }
 
-  if (action.type == 'setListaProfissoes') {
+  if (action.type === 'setListaProfissoes') {
     return {...state, listaProfissoes: action.payload.listaProfissoes};
   }
 
@@ -167,11 +167,11 @@ const AuthReducer = (state = initialState, action) => {
     };
   }
 
-  if (action.type == 'setErrorPicker') {
+  if (action.type === 'setErrorPicker') {
     return {...state, errorPicker: action.payload.errorPicker};
   }
 
-  if (action.type == 'setPickerBorderColor') {
+  if (action.type === 'setPickerBorderColor') {
     return {
       ...state,
       pickerBorderColor: action.payload.pickerBorderColor,

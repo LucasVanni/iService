@@ -59,7 +59,7 @@ export class ProviderSignUp extends Component {
   }
 
   UNSAFE_componentWillUpdate() {
-    if (this.props.status == 1) {
+    if (this.props.status === 1) {
       //Manda o user para a tela home
       this.props.navigation.dispatch(
         StackActions.reset({
@@ -102,6 +102,7 @@ export class ProviderSignUp extends Component {
               activeOpacity={0.7}
               containerStyle={[
                 styles.avatar,
+                // eslint-disable-next-line react-native/no-inline-styles
                 {
                   borderWidth: 4,
                   borderColor: this.props.avatarBorderColor,
@@ -254,7 +255,7 @@ export class ProviderSignUp extends Component {
 }
 
 const validateOnSelected = (listaProfissoes, objeto) => {
-  if (listaProfissoes.key == '0' || listaProfissoes.key == undefined) {
+  if (listaProfissoes.key === '0' || listaProfissoes.key === undefined) {
     objeto.props.setPickerBorderColor('#f00');
     objeto.props.setErrorPicker('Selecione uma profissão');
   } else {

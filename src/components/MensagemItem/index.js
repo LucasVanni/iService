@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableHighlight, StyleSheet} from 'react-native';
+import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
+// eslint-disable-next-line no-unused-vars
 import tz from 'moment-timezone';
 
 import {Icon} from 'react-native-elements';
@@ -20,7 +21,7 @@ export default class MensagemItem extends Component {
     let align = 'flex-start';
     let textAlign = 'left';
 
-    if (this.props.data.uid == this.props.userUid) {
+    if (this.props.data.uid === this.props.userUid) {
       borderColor = '#ff9e29';
       color = '#ff9e29';
       align = 'flex-end';
@@ -51,7 +52,7 @@ export default class MensagemItem extends Component {
   }
 
   render() {
-    const {view, text, dateTxt, imagem} = styles;
+    const {view, text, dateTxt} = styles;
     return (
       <View
         style={[
@@ -61,7 +62,7 @@ export default class MensagemItem extends Component {
             borderColor: this.state.borderColor,
           },
         ]}>
-        {this.props.data.tipoMensagem == 'text' && (
+        {this.props.data.tipoMensagem === 'text' && (
           <Text
             style={[
               text,
@@ -71,11 +72,11 @@ export default class MensagemItem extends Component {
           </Text>
         )}
 
-        {this.props.data.tipoMensagem == 'image' && (
+        {this.props.data.tipoMensagem === 'image' && (
           <AbrirModalImagem caminho={this.props.data.imgSrc} />
         )}
 
-        {this.props.data.tipoMensagem == 'audio' && (
+        {this.props.data.tipoMensagem === 'audio' && (
           <TouchableHighlight>
             <Icon
               color="#1f33c9"

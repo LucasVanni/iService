@@ -109,7 +109,7 @@ export const doSendEmail = objeto => {
             objeto.props.setEmailBorderColorForgot('#f00');
             break;
           default:
-            alert(rejectProps.error.code);
+            console.log(rejectProps.error.code);
             break;
         }
 
@@ -206,15 +206,15 @@ export const botaoAdicionarProfissao = (objeto, textoProfissao) => {
       if (snapshot.hasChildren()) {
         Object.keys(snapshot.val()).forEach(key => {
           if (
-            textoProfissao == snapshot.child(key).val().nomeProfissao ||
-            textoProfissao == undefined
+            textoProfissao === snapshot.child(key).val().nomeProfissao ||
+            textoProfissao === undefined
           ) {
             cadastro = false;
           } else if (
-            textoProfissao == 'Ator Pornô' ||
-            textoProfissao == 'Ator pornô'
+            textoProfissao === 'Ator Pornô' ||
+            textoProfissao === 'Ator pornô'
           ) {
-            alert('Profissão inválida');
+            console.log('Profissão inválida');
             cadastro = false;
           } else {
             cadastro = true;
@@ -225,7 +225,7 @@ export const botaoAdicionarProfissao = (objeto, textoProfissao) => {
       }
     });
 
-    if (cadastro == true) {
+    if (cadastro === true) {
       firebase
         .database()
         .ref('profissoes')
@@ -234,7 +234,7 @@ export const botaoAdicionarProfissao = (objeto, textoProfissao) => {
         });
       objeto.setState({isVisible: false});
     } else {
-      alert('Profissão já cadastrada');
+      console.log('Profissão já cadastrada');
     }
   };
 };
@@ -378,7 +378,7 @@ export const providerSignUp = (objeto, callback) => {
   return dispatch => {
     let cadastro = true;
 
-    if (objeto.props.pass != objeto.props.passConfirm) {
+    if (objeto.props.pass !== objeto.props.passConfirm) {
       objeto.props.setPassBorderColor('#f00');
       objeto.props.setErrorPass('As senhas não batem.');
       objeto.props.setPassConfirmBorderColor('#f00');
@@ -386,7 +386,7 @@ export const providerSignUp = (objeto, callback) => {
       cadastro = false;
     }
 
-    if (objeto.props.name == '') {
+    if (objeto.props.name === '') {
       objeto.props.setErrorName('Campo nome completo obrigatório');
       objeto.props.setNameBorderColor('#f00');
       cadastro = false;
@@ -398,7 +398,7 @@ export const providerSignUp = (objeto, callback) => {
       cadastro = false;
     }
 
-    if (objeto.props.email == '') {
+    if (objeto.props.email === '') {
       objeto.props.setEmailBorderColor('#f00');
       objeto.props.setErrorEmail('Campo e-mail obrigatório');
       cadastro = false;
@@ -413,19 +413,19 @@ export const providerSignUp = (objeto, callback) => {
       }
     }
 
-    if (objeto.props.pass == '') {
+    if (objeto.props.pass === '') {
       objeto.props.setPassBorderColor('#f00');
       objeto.props.setErrorPass('Campo senha obrigatório');
       cadastro = false;
     }
-    if (objeto.props.passConfirm == '') {
+    if (objeto.props.passConfirm === '') {
       objeto.props.setPassConfirmBorderColor('#f00', 4);
       objeto.props.setErrorPassConfirm('Campo confirmar senha obrigatório');
       cadastro = false;
     }
     if (
-      objeto.props.professionChoose.key == 0 ||
-      objeto.props.professionChoose.key == undefined
+      objeto.props.professionChoose.key === 0 ||
+      objeto.props.professionChoose.key === undefined
     ) {
       objeto.props.setPickerBorderColor('#f00');
       objeto.props.setErrorPicker('Selecione uma profissão');
@@ -445,7 +445,7 @@ export const providerSignUp = (objeto, callback) => {
         objeto.props.setNameBorderColor('#fff');
         objeto.props.setErrorName(null);
       } else {
-        if (objeto.props.name == '') {
+        if (objeto.props.name === '') {
           objeto.props.setNameBorderColor('#fff');
           objeto.props.setErrorName(null);
         } else {
@@ -509,7 +509,7 @@ export const userSignUp = (objeto, callback) => {
   return dispatch => {
     let cadastro = true;
 
-    if (objeto.props.pass != objeto.props.passConfirm) {
+    if (objeto.props.pass !== objeto.props.passConfirm) {
       objeto.props.setPassBorderColor('#f00');
       objeto.props.setErrorPass('As senhas não batem.');
       objeto.props.setPassConfirmBorderColor('#f00');
@@ -517,7 +517,7 @@ export const userSignUp = (objeto, callback) => {
       cadastro = false;
     }
 
-    if (objeto.props.name == '') {
+    if (objeto.props.name === '') {
       objeto.props.setErrorName('Campo nome completo obrigatório');
       objeto.props.setNameBorderColor('#f00');
       cadastro = false;
@@ -529,7 +529,7 @@ export const userSignUp = (objeto, callback) => {
       cadastro = false;
     }
 
-    if (objeto.props.email == '') {
+    if (objeto.props.email === '') {
       objeto.props.setEmailBorderColor('#f00');
       objeto.props.setErrorEmail('Campo e-mail obrigatório');
       cadastro = false;
@@ -544,12 +544,12 @@ export const userSignUp = (objeto, callback) => {
       }
     }
 
-    if (objeto.props.pass == '') {
+    if (objeto.props.pass === '') {
       objeto.props.setPassBorderColor('#f00');
       objeto.props.setErrorPass('Campo senha obrigatório');
       cadastro = false;
     }
-    if (objeto.props.passConfirm == '') {
+    if (objeto.props.passConfirm === '') {
       objeto.props.setPassConfirmBorderColor('#f00', 4);
       objeto.props.setErrorPassConfirm('Campo confirmar senha obrigatório');
       cadastro = false;
@@ -565,7 +565,7 @@ export const userSignUp = (objeto, callback) => {
         objeto.props.setNameBorderColor('#fff');
         objeto.props.setErrorName(null);
       } else {
-        if (objeto.props.name == '') {
+        if (objeto.props.name === '') {
           objeto.props.setNameBorderColor('#fff');
           objeto.props.setErrorName(null);
         } else {

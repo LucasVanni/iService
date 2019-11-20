@@ -9,7 +9,6 @@ export default class CalloutModal extends Component {
     };
     this.criarConversa = this.criarConversa.bind(this);
     this.clickContratarPrestador = this.clickContratarPrestador.bind(this);
-    this.doSearch = this.doSearch.bind(this);
   }
 
   setModalVisible(visible) {
@@ -26,10 +25,6 @@ export default class CalloutModal extends Component {
     this.props.contratarPrestador(
       this.props.objeto.state.prestadorItemSelecionado,
     );
-  }
-
-  doSearch() {
-    makeSearchLocations(this.props.infos.id).then(results => {});
   }
 
   render() {

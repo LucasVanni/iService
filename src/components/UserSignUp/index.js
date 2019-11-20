@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Picker,
   TouchableHighlight,
 } from 'react-native';
 
@@ -52,7 +51,7 @@ export class UserSignUp extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.status == 1) {
+    if (this.props.status === 1) {
       //Manda o user para a tela home
       this.props.navigation.dispatch(
         StackActions.reset({
@@ -95,6 +94,7 @@ export class UserSignUp extends Component {
               activeOpacity={0.7}
               containerStyle={[
                 styles.avatar,
+                // eslint-disable-next-line react-native/no-inline-styles
                 {
                   borderWidth: 4,
                   borderColor: this.props.avatarBorderColor,

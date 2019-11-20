@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
 
 import {connect} from 'react-redux';
 
@@ -49,7 +43,7 @@ class ListaPrestadoresItems extends Component {
           isVisible={this.state.isVisible}
           overlayBackgroundColor="rgb(255,255,255)"
           borderRadius={20}
-          overlayStyle={{borderColor: '#1f33c9', borderWidth: 6}}
+          overlayStyle={styles.overlayStyle}
           width="auto"
           onBackdropPress={() => setVisible(this, false)}
           height="auto">
@@ -172,5 +166,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 5,
     textAlign: 'center',
+  },
+  overlayStyle: {
+    borderColor: '#1f33c9',
+    borderWidth: 6,
   },
 });

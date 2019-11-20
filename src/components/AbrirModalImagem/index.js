@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {View, Text, Image, TouchableHighlight, StyleSheet} from 'react-native';
+import {View, Image, TouchableHighlight, StyleSheet} from 'react-native';
 
 import {Overlay} from 'react-native-elements';
 

@@ -5,19 +5,15 @@ import {CheckBox} from 'react-native-elements';
 
 export default class extends Component {
   render() {
-    const {viewCheckBox, img, botao, textoBotao} = styles;
+    const {viewCheckBox} = styles;
     return (
       <View style={viewCheckBox}>
         <CheckBox
           center
           title="Tomador de serviços"
-          containerStyle={{
-            paddingTop: 5,
-            backgroundColor: null,
-            borderWidth: 0,
-          }}
+          containerStyle={styles.container}
           checkedColor="#ff9e29"
-          textStyle={{color: '#fff', fontWeight: 'bold'}}
+          textStyle={styles.text2}
           onPress={() =>
             this.props.objeto.setState({
               checkedPrestador: false,
@@ -29,13 +25,9 @@ export default class extends Component {
         <CheckBox
           center
           title="Prestador de serviços"
-          containerStyle={{
-            paddingTop: 5,
-            backgroundColor: null,
-            borderWidth: 0,
-          }}
+          containerStyle={styles.container}
           checkedColor="#ff9e29"
-          textStyle={{color: '#fff'}}
+          textStyle={styles.text}
           onPress={() =>
             this.props.objeto.setState({
               checkedPrestador: true,
@@ -61,12 +53,10 @@ const styles = StyleSheet.create({
     height: 20,
     marginLeft: 10,
   },
-
   botao: {
     margin: 10,
     flexDirection: 'row-reverse',
   },
-
   textoBotao: {
     fontSize: 14,
     textAlign: 'center',
@@ -74,4 +64,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
+  container: {
+    paddingTop: 5,
+    backgroundColor: null,
+    borderWidth: 0,
+  },
+  text: {color: '#fff'},
+  text2: {color: '#fff', fontWeight: 'bold'},
 });

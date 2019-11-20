@@ -46,7 +46,7 @@ export class Login extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.status == 1) {
+    if (this.props.status === 1) {
       //Manda o user para a tela home
       this.props.navigation.dispatch(
         StackActions.reset({
@@ -59,7 +59,7 @@ export class Login extends Component {
 
   render() {
     function loginAction(objeto) {
-      if (objeto.props.emailValid == true && objeto.props.passValid == true) {
+      if (objeto.props.emailValid === true && objeto.props.passValid === true) {
         return () => {
           objeto.setState({loading: true});
           objeto.props.doLogin(objeto, () => {
@@ -73,7 +73,7 @@ export class Login extends Component {
 
     let SignInButtonOpacity = 0.2;
 
-    if (this.props.emailValid == true && this.props.passValid == true) {
+    if (this.props.emailValid === true && this.props.passValid === true) {
       SignInButtonOpacity = 1;
     }
 
