@@ -9,7 +9,7 @@
 
 <p align="center">
     <h2>Login Screen</h2>
-    <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/LoginScreen.jpeg?raw=true" height="300" alt="LoginScreen" />
+    <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/LoginScreen.jpeg?raw=true" align="center" height="300" alt="LoginScreen" />
 </p>
 
 
