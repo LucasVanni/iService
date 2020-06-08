@@ -1,1 +1,11 @@
-Projeto de TCC efetuado no ano de 2019, com a proposta de conectar prestadores de serviço à tomadores de serviço...
+<p style="text-align: center;">Projeto de TCC efetuado no ano de 2019, com a proposta de conectar prestadores de serviço à tomadores de serviço.</p>
+
+Aqui está algumas imagens da aplicação funcionando:
+
+Login Screen
+
+![Login Screen](./ImagesForMarkdownFile/LoginScreen.jpeg)
+
+Provider Screen
+
+![Provider Sign UP](./ImagesForMarkdownFile/ProviderSignUpScreen.jpeg)``
