@@ -7,40 +7,49 @@
     Aqui está algumas imagens da aplicação funcionando:
 </p>
 
+<h2 align="center">Login Screen</h2>
+
 <p align="center">
-    <h2>Login Screen</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/LoginScreen.jpeg?raw=true" align="center" height="300" alt="LoginScreen" />
 </p>
 
+<h2 align="center">First Provider SignUp Screen</h2>
 
 <p align="center">
-    <h2>First Provider SignUp Screen</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/ProviderSignUpScreen.jpeg?raw=true" height="300" alt="Provider SignUp" />
 </p>
 
+
+<h2 align="center">Continues Provider SignUp Screen</h2>
+
 <p align="center">
-    <h2>Continues Provider SignUp Screen</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/ProviderSignUpScreen2.jpeg?raw=true" height="300" alt="Provider SignUp part 2" />
 </p>
 
+
+<h2 align="center">User SignUp Screen</h2>
+
 <p align="center">
-    <h2>User SignUp Screen</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/UserSignUpScreen.jpeg?raw=true" height="300" alt="User SignUp" />
 </p>
 
 
+
+<h2 align="center">Home Screen</h2>
+
 <p align="center">
-    <h2>Home Screen</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/HomeScreen.jpeg?raw=true" height="300" alt="Home Screen" />
 </p>
 
+<h2 align="center>Drawer Menu</h2>
+
 <p align="center">
-    <h2>Drawer Menu</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/DrawerMenu.jpeg?raw=true" height="300" alt="Drawer Menu" />
 </p>
 
+<h2 align="center">Chat</h2>
+
 <p align="center">
-    <h2>Chat</h2>
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/Chat.jpeg?raw=true" height="300" alt="Chat" />
 </p>
 
