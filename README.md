@@ -1,4 +1,8 @@
 <p align="center">
+    <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/src/components/Logo/images/IService@3x.png?raw=true" align="center" alt="LoginScreen" />
+</p>
+
+<p align="center">
   Projeto de TCC efetuado no ano de 2019, com a proposta de conectar prestadores de serviço à tomadores de serviço.
 </p>
 
