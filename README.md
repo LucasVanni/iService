@@ -41,7 +41,7 @@
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/HomeScreen.jpeg?raw=true" height="300" alt="Home Screen" />
 </p>
 
-<h2 align="center>Drawer Menu</h2>
+<h2 align="center">Drawer Menu</h2>
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/LucasVanni/iService/master/ImagesForMarkdownFile/DrawerMenu.jpeg?raw=true" height="300" alt="Drawer Menu" />
