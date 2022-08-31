@@ -15,7 +15,7 @@
     "@fortawesome/react-native-fontawesome": "^0.1.0",
     "firebase": "^7.2.1",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.35",
     "react": "16.9.0",
     "react-native": "0.61.2",
     "react-native-animated-linear-gradient": "^1.2.0",
