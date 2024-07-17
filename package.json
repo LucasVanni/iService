@@ -17,7 +17,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
     "react": "16.9.0",
-    "react-native": "0.61.2",
+    "react-native": "0.62.3",
     "react-native-animated-linear-gradient": "^1.2.0",
     "react-native-audio-record": "^0.2.2",
     "react-native-elements": "^1.2.6",
